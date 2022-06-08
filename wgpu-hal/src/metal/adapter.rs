@@ -1,5 +1,5 @@
 use mtl::{MTLFeatureSet, MTLGPUFamily, MTLLanguageVersion, MTLReadWriteTextureTier};
-use objc::{class, msg_send, sel, sel_impl};
+use objc::{class, msg_send, runtime::Object, sel, sel_impl};
 use parking_lot::Mutex;
 use wgt::{AstcBlock, AstcChannel};
 
@@ -443,6 +443,54 @@ impl super::PrivateCapabilities {
             .any(|x| raw.supports_feature_set(x))
     }
 
+    unsafe fn support_timestamp(device: &mtl::Device) -> bool {
+        unsafe fn nsstring_as_str(nsstr: &Object) -> &str {
+            let bytes = {
+                let bytes: *const std::os::raw::c_char = msg_send![nsstr, UTF8String];
+                bytes as *const u8
+            };
+            let len: mtl::NSUInteger = msg_send![nsstr, length];
+            let bytes = std::slice::from_raw_parts(bytes, len as usize);
+            std::str::from_utf8(bytes).unwrap()
+        }
+        const COUNTERSET_TIMESTAMP: &'static str = "TIMESTAMP";
+        const COUNTER_GPUTIMESTAMP: &'static str = "GPUTIMESTAMP";
+
+        let counter_sets: *mut Object = msg_send![device.as_ref(), counterSets];
+        let count: mtl::NSInteger = msg_send![counter_sets, count];
+        if count > 0 {
+            for index in 0..count {
+                let counter_set: *mut Object = msg_send![counter_sets, objectAtIndex: index];
+                let cs_name: *mut Object = msg_send![counter_set, name];
+                println!(
+                    "getCounterSets: {}, {:?}",
+                    count,
+                    nsstring_as_str(&*cs_name)
+                );
+                if nsstring_as_str(&*cs_name)
+                    .to_uppercase()
+                    .contains(COUNTERSET_TIMESTAMP)
+                {
+                    let counters: *mut Object = msg_send![counter_set, counters];
+                    let c_count: mtl::NSInteger = msg_send![counters, count];
+                    for c_index in 0..c_count {
+                        let counter: *mut Object = msg_send![counters, objectAtIndex: c_index];
+                        let c_name: *mut Object = msg_send![counter, name];
+                        println!("counter: {}, {:?}", count, nsstring_as_str(&*c_name));
+                        if nsstring_as_str(&*c_name)
+                            .to_uppercase()
+                            .contains(COUNTER_GPUTIMESTAMP)
+                        {
+                            println!("支持 timestamp query");
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        false
+    }
+
     pub fn new(device: &mtl::Device) -> Self {
         #[repr(C)]
         #[derive(Clone, Copy, Debug)]
@@ -467,8 +515,7 @@ impl super::PrivateCapabilities {
         }
 
         let mut version: NSOperatingSystemVersion = unsafe {
-            let process_info: *mut objc::runtime::Object =
-                msg_send![class!(NSProcessInfo), processInfo];
+            let process_info: *mut Object = msg_send![class!(NSProcessInfo), processInfo];
             msg_send![process_info, operatingSystemVersion]
         };
 
@@ -731,6 +778,10 @@ impl super::PrivateCapabilities {
             supports_depth_clip_control: os_is_mac
                 || device.supports_feature_set(MTLFeatureSet::iOS_GPUFamily4_v1),
             supports_preserve_invariance: version.at_least((11, 0), (13, 0)),
+            // On AMD GPUs below macOS 11, write_timestamp fails to call without any copy commands on MTLBlitCommandEncoder.
+            // This issue has been fixed on macOS 11.
+            supports_timestamp_query: version.at_least((11, 0), (14, 0))
+                && unsafe { Self::support_timestamp(device) },
             has_unified_memory: if version.at_least((10, 15), (13, 0)) {
                 Some(device.has_unified_memory())
             } else {
@@ -792,6 +843,7 @@ impl super::PrivateCapabilities {
             self.sampler_clamp_to_border,
         );
         features.set(F::ADDRESS_MODE_CLAMP_TO_ZERO, true);
+        features.set(F::TIMESTAMP_QUERY, self.supports_timestamp_query);
 
         features
     }

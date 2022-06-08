@@ -227,6 +227,7 @@ struct PrivateCapabilities {
     supports_mutability: bool,
     supports_depth_clip_control: bool,
     supports_preserve_invariance: bool,
+    supports_timestamp_query: bool,
     has_unified_memory: Option<bool>,
 }
 
