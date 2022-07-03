@@ -2010,12 +2010,7 @@ impl crate::Context for Context {
         encoder: &Self::CommandEncoderId,
         desc: &ComputePassDescriptor,
     ) -> Self::ComputePassId {
-        wgc::command::ComputePass::new(
-            encoder.id,
-            &wgc::command::ComputePassDescriptor {
-                label: desc.label.map(Borrowed),
-            },
-        )
+        wgc::command::ComputePass::new(encoder.id, desc)
     }
 
     fn command_encoder_end_compute_pass(

@@ -516,7 +516,7 @@ pub trait CommandEncoder<A: Api>: Send + Sync {
     // compute passes
 
     // Begins a compute pass, clears all active bindings.
-    unsafe fn begin_compute_pass(&mut self, desc: &ComputePassDescriptor);
+    unsafe fn begin_compute_pass(&mut self, desc: &wgt::ComputePassDescriptor);
     unsafe fn end_compute_pass(&mut self);
 
     unsafe fn set_compute_pipeline(&mut self, pipeline: &A::ComputePipeline);
@@ -1182,11 +1182,6 @@ pub struct RenderPassDescriptor<'a, A: Api> {
     pub color_attachments: &'a [Option<ColorAttachment<'a, A>>],
     pub depth_stencil_attachment: Option<DepthStencilAttachment<'a, A>>,
     pub multiview: Option<NonZeroU32>,
-}
-
-#[derive(Clone, Debug)]
-pub struct ComputePassDescriptor<'a> {
-    pub label: Label<'a>,
 }
 
 /// Stores if any API validation error has occurred in this process

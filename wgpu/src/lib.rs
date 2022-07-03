@@ -42,6 +42,7 @@ pub use wgt::{
     MAP_ALIGNMENT, PUSH_CONSTANT_ALIGNMENT, QUERY_RESOLVE_BUFFER_ALIGNMENT, QUERY_SET_MAX_QUERIES,
     QUERY_SIZE, VERTEX_STRIDE_ALIGNMENT,
 };
+pub use wgt::{ComputePassDescriptor, ComputePassType};
 
 use backend::{BufferMappedRange, Context as C, QueueWriteBuffer};
 
@@ -1517,18 +1518,6 @@ pub struct RenderPipelineDescriptor<'a> {
     /// If the pipeline will be used with a multiview render pass, this indicates how many array
     /// layers the attachments will have.
     pub multiview: Option<NonZeroU32>,
-}
-
-/// Describes the attachments of a compute pass.
-///
-/// For use with [`CommandEncoder::begin_compute_pass`].
-///
-/// Corresponds to [WebGPU `GPUComputePassDescriptor`](
-/// https://gpuweb.github.io/gpuweb/#dictdef-gpucomputepassdescriptor).
-#[derive(Clone, Debug, Default)]
-pub struct ComputePassDescriptor<'a> {
-    /// Debug label of the compute pass. This will show up in graphics debuggers for easy identification.
-    pub label: Label<'a>,
 }
 
 /// Describes a compute pipeline.

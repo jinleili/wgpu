@@ -896,11 +896,14 @@ impl crate::CommandEncoder<super::Api> for super::CommandEncoder {
 
     // compute
 
-    unsafe fn begin_compute_pass(&mut self, desc: &crate::ComputePassDescriptor) {
+    unsafe fn begin_compute_pass(&mut self, desc: &wgt::ComputePassDescriptor) {
         self.begin_pass();
-
+        let dispatch_type = match desc.ty {
+            wgt::ComputePassType::Serial => mtl::MTLDispatchType::Serial,
+            wgt::ComputePassType::Concurrent => mtl::MTLDispatchType::Concurrent,
+        };
         let raw = self.raw_cmd_buf.as_ref().unwrap();
-        let encoder = raw.new_compute_command_encoder();
+        let encoder = raw.compute_command_encoder_with_dispatch_type(dispatch_type);
         if let Some(label) = desc.label {
             encoder.set_label(label);
         }

@@ -3645,6 +3645,39 @@ impl<T> Default for RenderBundleDescriptor<Option<T>> {
     }
 }
 
+/// Defines the sync scope in compute pass
+#[derive(Clone, Copy, Debug)]
+#[cfg_attr(feature = "trace", derive(Serialize))]
+#[cfg_attr(feature = "replay", derive(Deserialize))]
+pub enum ComputePassType {
+    /// One usage scope per dispatch.
+    /// Dispatch commands are executed sequentially.
+    Serial,
+    /// One usage scope per pass.
+    /// Dispatch commands may be executed concurrently.
+    Concurrent,
+}
+
+impl Default for ComputePassType {
+    fn default() -> Self {
+        ComputePassType::Serial
+    }
+}
+
+/// Describes the attachments of a compute pass.
+///
+/// For use with [`CommandEncoder::begin_compute_pass`].
+///
+/// Corresponds to [WebGPU `GPUComputePassDescriptor`](
+/// https://gpuweb.github.io/gpuweb/#dictdef-gpucomputepassdescriptor).
+#[derive(Clone, Debug, Default)]
+pub struct ComputePassDescriptor<'a> {
+    /// Debug label of the compute pass. This will show up in graphics debuggers for easy identification.
+    pub label: Option<&'a str>,
+    /// Specify the sync scope in compute pass
+    pub ty: ComputePassType,
+}
+
 /// Layout of a texture in a buffer's memory.
 ///
 /// The bytes per row and rows per image can be hard to figure out so here are some examples:

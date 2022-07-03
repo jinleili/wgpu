@@ -18,13 +18,12 @@ use crate::{
     resource::{self, Buffer, Texture},
     track::{Tracker, UsageConflict, UsageScope},
     validation::{check_buffer_usage, MissingBufferUsageError},
-    Label,
 };
 
 use hal::CommandEncoder as _;
 use thiserror::Error;
 
-use std::{fmt, mem, str};
+use std::{borrow::Cow, fmt, mem, str};
 
 #[doc(hidden)]
 #[derive(Clone, Copy, Debug)]
@@ -89,6 +88,7 @@ pub enum ComputeCommand {
 #[cfg_attr(feature = "serial-pass", derive(serde::Deserialize, serde::Serialize))]
 pub struct ComputePass {
     base: BasePass<ComputeCommand>,
+    ty: wgt::ComputePassType,
     parent_id: id::CommandEncoderId,
 
     // Resource binding dedupe state.
@@ -99,11 +99,11 @@ pub struct ComputePass {
 }
 
 impl ComputePass {
-    pub fn new(parent_id: id::CommandEncoderId, desc: &ComputePassDescriptor) -> Self {
+    pub fn new(parent_id: id::CommandEncoderId, desc: &wgt::ComputePassDescriptor) -> Self {
         Self {
-            base: BasePass::new(&desc.label),
+            base: BasePass::new(&desc.label.map(|s| Cow::Borrowed(s))),
+            ty: desc.ty,
             parent_id,
-
             current_bind_groups: BindGroupStateChange::new(),
             current_pipeline: StateChange::new(),
         }
@@ -129,11 +129,6 @@ impl fmt::Debug for ComputePass {
             self.base.dynamic_offsets.len()
         )
     }
-}
-
-#[derive(Clone, Debug, Default)]
-pub struct ComputePassDescriptor<'a> {
-    pub label: Label<'a>,
 }
 
 #[derive(Clone, Debug, Error, PartialEq)]
@@ -319,7 +314,7 @@ impl<G: GlobalIdentityHandlerFactory> Global<G> {
         encoder_id: id::CommandEncoderId,
         pass: &ComputePass,
     ) -> Result<(), ComputePassError> {
-        self.command_encoder_run_compute_pass_impl::<A>(encoder_id, pass.base.as_ref())
+        self.command_encoder_run_compute_pass_impl::<A>(encoder_id, pass.base.as_ref(), pass.ty)
     }
 
     #[doc(hidden)]
@@ -327,6 +322,7 @@ impl<G: GlobalIdentityHandlerFactory> Global<G> {
         &self,
         encoder_id: id::CommandEncoderId,
         base: BasePassRef<ComputeCommand>,
+        ty: wgt::ComputePassType,
     ) -> Result<(), ComputePassError> {
         profiling::scope!("CommandEncoder::run_compute_pass");
         let init_scope = PassErrorScope::Pass(encoder_id);
@@ -386,7 +382,10 @@ impl<G: GlobalIdentityHandlerFactory> Global<G> {
             Some(&*query_set_guard),
         );
 
-        let hal_desc = hal::ComputePassDescriptor { label: base.label };
+        let hal_desc = wgt::ComputePassDescriptor {
+            label: base.label,
+            ty,
+        };
         unsafe {
             raw.begin_compute_pass(&hal_desc);
         }
