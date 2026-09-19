@@ -1,0 +1,239 @@
+All formal processes: exit 0, one exact scenario, 3 metrics × 128 iterations; throughput 10000 draws and 1000 bind groups. Each startup performed 8 warmup submissions and pixel readback by the unchanged benchmark source.
+
+=== r2-vulkan-ab-g1-s1-p1-a ===
+Using previous benchmark results for comparison.
+
+Running benchmark: Texture Init Render: shared attachments
+  Using adapter: Intel(R) Arc(TM) B390 GPU (Vulkan)
+              Encoding:    2.228ms (over 128 iter) 4.49M  draws/s
+                Submit:  117.454µs (over 128 iter) 85.1M  draws/s
+    Create bind groups:  780.998µs (over 128 iter) 1.28M groups/s
+
+
+
+=== r2-vulkan-ab-g1-s1-p2-b ===
+Using previous benchmark results for comparison.
+
+Running benchmark: Texture Init Render: shared attachments
+  Using adapter: Intel(R) Arc(TM) B390 GPU (Vulkan)
+              Encoding:    1.843ms (over 128 iter) 5.43M  draws/s
+                Submit:  108.560µs (over 128 iter) 92.1M  draws/s
+    Create bind groups:  757.660µs (over 128 iter) 1.32M groups/s
+
+
+
+=== r2-dx12-ab-g1-s1-p1-a ===
+Using previous benchmark results for comparison.
+
+Running benchmark: Texture Init Render: shared attachments
+  Using adapter: Intel(R) Arc(TM) B390 GPU (Dx12)
+              Encoding:    3.407ms ( +2.58%; over 128 iter) 2.94M  draws/s  (-2.51%)
+                Submit:  133.975µs (+11.91%; over 128 iter) 74.6M  draws/s (-10.64%)
+    Create bind groups:  474.651µs ( +3.26%; over 128 iter) 2.11M groups/s  (-3.16%)
+
+
+
+=== r2-dx12-ab-g1-s1-p2-b ===
+Using previous benchmark results for comparison.
+
+Running benchmark: Texture Init Render: shared attachments
+  Using adapter: Intel(R) Arc(TM) B390 GPU (Dx12)
+              Encoding:    2.863ms (+52.87%; over 128 iter) 3.49M  draws/s (-34.58%)
+                Submit:  123.502µs ( +6.57%; over 128 iter) 81.0M  draws/s  (-6.16%)
+    Create bind groups:  465.479µs (-43.19%; over 128 iter) 2.15M groups/s (+76.04%)
+
+
+
+
+=== Vulkan loader layer diagnostic (separate audit after measurements) ===
+[Vulkan Loader] LAYER:          Checking for Layer Manifest files in Registry at HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\ImplicitLayers
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device ROOT\DISPLAY\0000
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: unable to open child-device error:13
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device PCI\VEN_8086&DEV_B080&SUBSYS_891E1043&REV_04\3&11583659&1&10
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 3 - SWD\DRIVERENUM\IGS&4&A8719DD&0
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 4 - DISPLAY\UGRFFFF\4&A8719DD&0&UID32824
+[Vulkan Loader] DEBUG | LAYER:  windows_get_device_registry_files: GUID for 4 is not SoftwareComponent skipping
+[Vulkan Loader] LAYER:          windows_get_device_registry_files: found no registry files
+[Vulkan Loader] INFO | LAYER:   Located json file "C:\Program Files\RenderDoc\renderdoc.json" from registry "HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\ImplicitLayers"
+[Vulkan Loader] LAYER:          Checking for Layer Manifest files in Registry at HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\ImplicitLayers
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device ROOT\DISPLAY\0000
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: unable to open child-device error:13
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device PCI\VEN_8086&DEV_B080&SUBSYS_891E1043&REV_04\3&11583659&1&10
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 3 - SWD\DRIVERENUM\IGS&4&A8719DD&0
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 4 - DISPLAY\UGRFFFF\4&A8719DD&0&UID32824
+[Vulkan Loader] DEBUG | LAYER:  windows_get_device_registry_files: GUID for 4 is not SoftwareComponent skipping
+[Vulkan Loader] LAYER:          windows_get_device_registry_files: found no registry files
+[Vulkan Loader] INFO | LAYER:   Located json file "C:\Program Files\RenderDoc\renderdoc.json" from registry "HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\ImplicitLayers"
+[Vulkan Loader] LAYER:          Checking for Layer Manifest files in Registry at HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\ImplicitLayers
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device ROOT\DISPLAY\0000
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: unable to open child-device error:13
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device PCI\VEN_8086&DEV_B080&SUBSYS_891E1043&REV_04\3&11583659&1&10
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 3 - SWD\DRIVERENUM\IGS&4&A8719DD&0
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 4 - DISPLAY\UGRFFFF\4&A8719DD&0&UID32824
+[Vulkan Loader] DEBUG | LAYER:  windows_get_device_registry_files: GUID for 4 is not SoftwareComponent skipping
+[Vulkan Loader] LAYER:          windows_get_device_registry_files: found no registry files
+[Vulkan Loader] INFO | LAYER:   Located json file "C:\Program Files\RenderDoc\renderdoc.json" from registry "HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\ImplicitLayers"
+[Vulkan Loader] LAYER:          Checking for Layer Manifest files in Registry at HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\ExplicitLayers
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device ROOT\DISPLAY\0000
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: unable to open child-device error:13
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device PCI\VEN_8086&DEV_B080&SUBSYS_891E1043&REV_04\3&11583659&1&10
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 3 - SWD\DRIVERENUM\IGS&4&A8719DD&0
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 4 - DISPLAY\UGRFFFF\4&A8719DD&0&UID32824
+[Vulkan Loader] DEBUG | LAYER:  windows_get_device_registry_files: GUID for 4 is not SoftwareComponent skipping
+[Vulkan Loader] LAYER:          windows_get_device_registry_files: found no registry files
+[Vulkan Loader] LAYER:          Found no registry files in HKEY_CURRENT_USER\SOFTWARE\Khronos\Vulkan\ExplicitLayers
+[Vulkan Loader] WARNING | LAYER: windows_read_data_files_in_registry: Registry lookup failed to get layer manifest files.
+[Vulkan Loader] WARNING | LAYER: Layer "VK_LAYER_RENDERDOC_Capture" forced disabled because name matches filter of env var 'VK_LOADER_LAYERS_DISABLE'.
+[Vulkan Loader] LAYER:          Checking for Layer Manifest files in Registry at HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\ImplicitLayers
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device ROOT\DISPLAY\0000
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: unable to open child-device error:13
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device PCI\VEN_8086&DEV_B080&SUBSYS_891E1043&REV_04\3&11583659&1&10
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 3 - SWD\DRIVERENUM\IGS&4&A8719DD&0
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 4 - DISPLAY\UGRFFFF\4&A8719DD&0&UID32824
+[Vulkan Loader] DEBUG | LAYER:  windows_get_device_registry_files: GUID for 4 is not SoftwareComponent skipping
+[Vulkan Loader] LAYER:          windows_get_device_registry_files: found no registry files
+[Vulkan Loader] INFO | LAYER:   Located json file "C:\Program Files\RenderDoc\renderdoc.json" from registry "HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\ImplicitLayers"
+[Vulkan Loader] LAYER:          Checking for Layer Manifest files in Registry at HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\ImplicitLayers
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device ROOT\DISPLAY\0000
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: unable to open child-device error:13
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device PCI\VEN_8086&DEV_B080&SUBSYS_891E1043&REV_04\3&11583659&1&10
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 3 - SWD\DRIVERENUM\IGS&4&A8719DD&0
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 4 - DISPLAY\UGRFFFF\4&A8719DD&0&UID32824
+[Vulkan Loader] DEBUG | LAYER:  windows_get_device_registry_files: GUID for 4 is not SoftwareComponent skipping
+[Vulkan Loader] LAYER:          windows_get_device_registry_files: found no registry files
+[Vulkan Loader] INFO | LAYER:   Located json file "C:\Program Files\RenderDoc\renderdoc.json" from registry "HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\ImplicitLayers"
+[Vulkan Loader] LAYER:          Checking for Layer Manifest files in Registry at HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\ImplicitLayers
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device ROOT\DISPLAY\0000
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: unable to open child-device error:13
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device PCI\VEN_8086&DEV_B080&SUBSYS_891E1043&REV_04\3&11583659&1&10
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 3 - SWD\DRIVERENUM\IGS&4&A8719DD&0
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 4 - DISPLAY\UGRFFFF\4&A8719DD&0&UID32824
+[Vulkan Loader] DEBUG | LAYER:  windows_get_device_registry_files: GUID for 4 is not SoftwareComponent skipping
+[Vulkan Loader] LAYER:          windows_get_device_registry_files: found no registry files
+[Vulkan Loader] INFO | LAYER:   Located json file "C:\Program Files\RenderDoc\renderdoc.json" from registry "HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\ImplicitLayers"
+[Vulkan Loader] LAYER:          Checking for Layer Manifest files in Registry at HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\ExplicitLayers
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device ROOT\DISPLAY\0000
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: unable to open child-device error:13
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: opening device PCI\VEN_8086&DEV_B080&SUBSYS_891E1043&REV_04\3&11583659&1&10
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 3 - SWD\DRIVERENUM\IGS&4&A8719DD&0
+[Vulkan Loader] INFO | LAYER:   windows_get_device_registry_files: Opening child device 4 - DISPLAY\UGRFFFF\4&A8719DD&0&UID32824
+[Vulkan Loader] DEBUG | LAYER:  windows_get_device_registry_files: GUID for 4 is not SoftwareComponent skipping
+[Vulkan Loader] LAYER:          windows_get_device_registry_files: found no registry files
+[Vulkan Loader] LAYER:          Found no registry files in HKEY_CURRENT_USER\SOFTWARE\Khronos\Vulkan\ExplicitLayers
+WARNING: [Loader Message] Code 0 : windows_read_data_files_in_registry: Registry lookup failed to get layer manifest files.
+[Vulkan Loader] WARNING | LAYER: windows_read_data_files_in_registry: Registry lookup failed to get layer manifest files.
+WARNING: [Loader Message] Code 0 : Layer "VK_LAYER_RENDERDOC_Capture" forced disabled because name matches filter of env var 'VK_LOADER_LAYERS_DISABLE'.
+[Vulkan Loader] WARNING | LAYER: Layer "VK_LAYER_RENDERDOC_Capture" forced disabled because name matches filter of env var 'VK_LOADER_LAYERS_DISABLE'.
+[Vulkan Loader] LAYER:          vkCreateInstance layer callstack setup to:
+[Vulkan Loader] LAYER:             <Application>
+[Vulkan Loader] LAYER:               ||
+[Vulkan Loader] LAYER:             <Loader>
+[Vulkan Loader] LAYER:               ||
+[Vulkan Loader] LAYER:             <Drivers>
+[Vulkan Loader] DRIVER:         vkCreateDevice layer callstack setup to:
+[Vulkan Loader] DRIVER:            <Application>
+[Vulkan Loader] DRIVER:              ||
+[Vulkan Loader] DRIVER:            <Loader>
+[Vulkan Loader] DRIVER:              ||
+[Vulkan Loader] DRIVER:            <Device>
+[Vulkan Loader] DRIVER:                Using "Intel(R) Arc(TM) B390 GPU" with driver: "C:\windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_d01b93f46114ebd1\.\igvk64.dll"
+[Vulkan Loader] DRIVER:         vkCreateDevice layer callstack setup to:
+[Vulkan Loader] DRIVER:            <Application>
+[Vulkan Loader] DRIVER:              ||
+[Vulkan Loader] DRIVER:            <Loader>
+[Vulkan Loader] DRIVER:              ||
+[Vulkan Loader] DRIVER:            <Device>
+[Vulkan Loader] DRIVER:                Using "Intel(R) Arc(TM) B390 GPU" with driver: "C:\windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_d01b93f46114ebd1\.\igvk64.dll"
+
+=== Vulkan adapter ===
+==========
+VULKANINFO
+==========
+
+Vulkan Instance Version: 1.4.313
+
+
+Instance Extensions: count = 13
+-------------------------------
+VK_EXT_debug_report                    : extension revision 10
+VK_EXT_debug_utils                     : extension revision 2
+VK_EXT_swapchain_colorspace            : extension revision 5
+VK_KHR_device_group_creation           : extension revision 1
+VK_KHR_external_fence_capabilities     : extension revision 1
+VK_KHR_external_memory_capabilities    : extension revision 1
+VK_KHR_external_semaphore_capabilities : extension revision 1
+VK_KHR_get_physical_device_properties2 : extension revision 2
+VK_KHR_get_surface_capabilities2       : extension revision 1
+VK_KHR_portability_enumeration         : extension revision 1
+VK_KHR_surface                         : extension revision 25
+VK_KHR_win32_surface                   : extension revision 6
+VK_LUNARG_direct_driver_loading        : extension revision 1
+
+Instance Layers:
+----------------
+
+Devices:
+========
+GPU0:
+	apiVersion         = 1.4.348
+	driverVersion      = 101.8860
+	vendorID           = 0x8086
+	deviceID           = 0xb080
+	deviceType         = PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU
+	deviceName         = Intel(R) Arc(TM) B390 GPU
+	driverID           = DRIVER_ID_INTEL_PROPRIETARY_WINDOWS
+	driverName         = Intel Corporation
+	driverInfo         = 101.8860
+	conformanceVersion = 1.4.0.0
+	deviceUUID         = 868080b0-0400-0000-0002-000000000000
+	driverUUID         = 33322e30-2e31-3031-2e38-383630000000
+GPU1:
+	apiVersion         = 1.4.348
+	driverVersion      = 101.8860
+	vendorID           = 0x8086
+	deviceID           = 0xb080
+	deviceType         = PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU
+	deviceName         = Intel(R) Arc(TM) B390 GPU
+	driverID           = DRIVER_ID_INTEL_PROPRIETARY_WINDOWS
+	driverName         = Intel Corporation
+	driverInfo         = 101.8860
+	conformanceVersion = 1.4.0.0
+	deviceUUID         = 868080b0-0400-0000-0002-000000000000
+	driverUUID         = 33322e30-2e31-3031-2e38-383630000000
+
+=== Direct3D configuration ===
+
+debug-layer
+----------------
+conservative-state-tracking=false
+debug-layer-mode=app-controlled
+gbv-mode=app-controlled
+gbv-pso-create-frontload=false
+gbv-shader-patch-mode=unguarded-validation
+gbv-state-tracking=app-controlled
+legacy-state-validation=app-controlled
+sync-command-queues=app-controlled
+
+device
+----------------
+auto-debug-name=app-controlled
+enable-pso-db=false
+feature-level-limit=none
+force-d3d11on12=false
+force-warp=false
+no-feature-level-upgrade=false
+precompiled-db-path=
+pso-db-path=
+
+apps
+----------------
+<no apps>
+
+dred
+----------------
+auto-breadcrumbs=system-controlled
+breadcrumb-contexts=system-controlled
+markers-only-breadcrumbs=app-controlled
+page-faults=system-controlled
+watson-dumps=system-controlled
+Independent PowerShell recomputation from raw JSON verified all 240 group metrics.
