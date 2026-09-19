@@ -1,0 +1,296 @@
+=== lavapipe-targeted-ready.log ===
+SHA256: 11B7FBEE0882EE45398A8C04D78890C590B093586975762819C6676532B86C25
+    Starting 1 test across 1 binary (1 test and 42 binaries skipped)
+     Summary [   0.142s] 1 test run: 1 passed, 1 skipped
+    Starting 12 tests across 43 binaries (1115 tests skipped)
+        PASS [   0.728s] ( 1/12) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: overlapping mixed views
+      Using adapter: llvmpipe (LLVM 22.1.8, 256 bits) (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.743s] ( 2/12) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: no sampled textures
+      Using adapter: llvmpipe (LLVM 22.1.8, 256 bits) (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.774s] ( 3/12) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: shared attachments
+      Using adapter: llvmpipe (LLVM 22.1.8, 256 bits) (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.049s] ( 4/12) wgpu-core command::memory_init::tests::first_uses_preserve_order_and_gaps
+        PASS [   0.808s] ( 5/12) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: discard then sample
+      Using adapter: llvmpipe (LLVM 22.1.8, 256 bits) (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.262s] ( 6/12) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::destroyed_texture
+    [2026-09-19T06:09:51Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::destroyed_texture
+        PASS [   0.262s] ( 7/12) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+    [2026-09-19T06:09:51Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+        PASS [   0.257s] ( 8/12) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+    [2026-09-19T06:09:51Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+        PASS [   0.244s] ( 9/12) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+    [2026-09-19T06:09:51Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+        PASS [   0.265s] (10/12) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::overlapping_views
+    [2026-09-19T06:09:51Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::overlapping_views
+        PASS [   0.232s] (11/12) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::reordered_submissions
+    [2026-09-19T06:09:51Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::reordered_submissions
+        PASS [   0.266s] (12/12) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::partial_view
+    [2026-09-19T06:09:51Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::partial_view
+     Summary [   1.307s] 12 tests run: 12 passed, 1115 skipped
+        PASS [   0.728s] ( 1/12) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: overlapping mixed views
+        PASS [   0.743s] ( 2/12) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: no sampled textures
+        PASS [   0.774s] ( 3/12) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: shared attachments
+        PASS [   0.049s] ( 4/12) wgpu-core command::memory_init::tests::first_uses_preserve_order_and_gaps
+        PASS [   0.808s] ( 5/12) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: discard then sample
+        PASS [   0.262s] ( 6/12) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::destroyed_texture
+        PASS [   0.262s] ( 7/12) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+        PASS [   0.257s] ( 8/12) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+        PASS [   0.244s] ( 9/12) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+        PASS [   0.265s] (10/12) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::overlapping_views
+        PASS [   0.232s] (11/12) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::reordered_submissions
+        PASS [   0.266s] (12/12) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::partial_view
+
+=== lavapipe-zero-init.log ===
+SHA256: 21AE04461B9BBE0AB92F77D638E5DA203205559B371ED6B275B7EAADA0E39EAC
+    Starting 1 test across 1 binary (1 test and 42 binaries skipped)
+     Summary [   0.127s] 1 test run: 1 passed, 1 skipped
+    Starting 53 tests across 1 binary (335 tests and 42 binaries skipped)
+        PASS [   0.233s] (32/53) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::destroyed_texture
+    [2026-09-19T06:10:11Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::destroyed_texture
+        PASS [   0.231s] (34/53) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+    [2026-09-19T06:10:11Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+        PASS [   0.233s] (35/53) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+    [2026-09-19T06:10:11Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+        PASS [   0.216s] (36/53) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+    [2026-09-19T06:10:11Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+        PASS [   0.248s] (37/53) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::overlapping_views
+    [2026-09-19T06:10:11Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::overlapping_views
+        PASS [   0.266s] (38/53) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::partial_view
+    [2026-09-19T06:10:11Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::partial_view
+        PASS [   0.221s] (39/53) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::reordered_submissions
+    [2026-09-19T06:10:11Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::reordered_submissions
+     Summary [   3.844s] 53 tests run: 53 passed, 335 skipped
+        PASS [   0.233s] (32/53) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::destroyed_texture
+        PASS [   0.231s] (34/53) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+        PASS [   0.233s] (35/53) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+        PASS [   0.216s] (36/53) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+        PASS [   0.248s] (37/53) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::overlapping_views
+        PASS [   0.266s] (38/53) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::partial_view
+        PASS [   0.221s] (39/53) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::reordered_submissions
+    [2026-09-19T06:10:09Z WARN  wgpu_hal::vulkan::instance] VALIDATION [WARNING-VkImageSubresourceRange-layerCount-compatibility (0x9b0d5645)]
+        vkCmdPipelineBarrier(): pImageMemoryBarriers[0].subresourceRange.layerCount is 1 for a 3D image (VkImage 0x1b000000001b[RenderTarget]) created with VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT. The maintenance9 feature is not currently enabled, so layerCount refers to all depth slices. When maintenance9 is enabled, it instead refers to a single depth slice. To remain forward-compatible, layerCount should be set to VK_REMAINING_ARRAY_LAYERS.
+    [2026-09-19T06:10:09Z WARN  wgpu_hal::vulkan::instance] objects: (type: COMMAND_BUFFER, hndl: 0x1a9f53ef040, name: (wgpu internal) PendingWrites)
+    [2026-09-19T06:10:09Z INFO  wgpu_core::device::queue] Queue::write_texture
+
+=== fault-injected.log ===
+SHA256: F3E79BE97261D905B5FD1066EE4063A33B9EEA4FF6EA512DAD484327C7B573A8
+    Starting 1 test across 1 binary (387 tests and 42 binaries skipped)
+        FAIL [   0.314s] (1/1) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+    assertion `left == right` failed: read after dropping unsubmitted commands: usage=TextureUsages(COPY_DST | TEXTURE_BINDING), mip=0, layer=0, x=0, y=0
+      left: 2155905152
+     right: 0
+    [2026-09-19T06:11:41Z ERROR wgpu_test::expectations] Panic: assertion `left == right` failed: read after dropping unsubmitted commands: usage=TextureUsages(COPY_DST | TEXTURE_BINDING), mip=0, layer=0, x=0, y=0
+          left: 2155905152
+         right: 0
+     Summary [   0.326s] 1 test run: 0 passed, 1 failed, 387 skipped
+        FAIL [   0.314s] (1/1) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+
+=== fault-restored.log ===
+SHA256: 04C368069309812DD0B5E2AC9F7EF270648E4F02A8D4DAE0CBA4FF52F5C9C8D3
+    Starting 1 test across 1 binary (387 tests and 42 binaries skipped)
+        PASS [   0.218s] (1/1) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+    [2026-09-19T06:12:16Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+     Summary [   0.219s] 1 test run: 1 passed, 387 skipped
+
+=== lavapipe-full.log ===
+SHA256: 38157B76A9F56A9E11B01B890F13A927A67AF3201DA21C4DECF2D3EF53F3E031
+    Starting 1 test across 1 binary (1 test and 42 binaries skipped)
+     Summary [   0.125s] 1 test run: 1 passed, 1 skipped
+    Starting 1121 tests across 43 binaries (6 tests skipped via profile.default.default-filter)
+      Using adapter: llvmpipe (LLVM 22.1.8, 256 bits) (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+      Using adapter: llvmpipe (LLVM 22.1.8, 256 bits) (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+      Using adapter: llvmpipe (LLVM 22.1.8, 256 bits) (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.797s] ( 401/1121) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: discard then sample
+      Using adapter: llvmpipe (LLVM 22.1.8, 256 bits) (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.614s] ( 402/1121) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: no sampled textures
+      Using adapter: llvmpipe (LLVM 22.1.8, 256 bits) (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+      Using adapter: llvmpipe (LLVM 22.1.8, 256 bits) (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.684s] ( 404/1121) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: overlapping mixed views
+      Using adapter: llvmpipe (LLVM 22.1.8, 256 bits) (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+      Using adapter: llvmpipe (LLVM 22.1.8, 256 bits) (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.812s] ( 406/1121) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: shared attachments
+      Using adapter: llvmpipe (LLVM 22.1.8, 256 bits) (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.049s] ( 409/1121) wgpu-core command::memory_init::tests::first_uses_preserve_order_and_gaps
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.236s] ( 878/1121) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::destroyed_texture
+    [2026-09-19T06:14:21Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::destroyed_texture
+        PASS [   0.235s] ( 880/1121) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+    [2026-09-19T06:14:21Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+        PASS [   0.235s] ( 881/1121) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+    [2026-09-19T06:14:21Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+        PASS [   0.218s] ( 882/1121) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+    [2026-09-19T06:14:22Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+        PASS [   0.246s] ( 883/1121) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::overlapping_views
+    [2026-09-19T06:14:22Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::overlapping_views
+        PASS [   0.233s] ( 884/1121) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::reordered_submissions
+    [2026-09-19T06:14:22Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::reordered_submissions
+        PASS [   0.278s] ( 885/1121) wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::partial_view
+    [2026-09-19T06:14:22Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::partial_view
+     Summary [  95.158s] 1121 tests run: 1121 passed, 6 skipped
+    [2026-09-19T06:14:14Z WARN  wgpu_hal::vulkan::instance] VALIDATION [WARNING-VkImageSubresourceRange-layerCount-compatibility (0x9b0d5645)]
+        vkCmdPipelineBarrier(): pImageMemoryBarriers[0].subresourceRange.layerCount is 1 for a 3D image (VkImage 0x220000000022) created with VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT. The maintenance9 feature is not currently enabled, so layerCount refers to all depth slices. When maintenance9 is enabled, it instead refers to a single depth slice. To remain forward-compatible, layerCount should be set to VK_REMAINING_ARRAY_LAYERS.
+    [2026-09-19T06:14:14Z WARN  wgpu_hal::vulkan::instance] objects: (type: COMMAND_BUFFER, hndl: 0x1eaf6770d20, name: (wgpu internal) Pre Pass)
+    [2026-09-19T06:14:14Z INFO  wgpu_core::command] Finished encoding render pass (success)
+    [2026-09-19T06:13:18Z WARN  wgpu_hal::vulkan::instance] VALIDATION [VALIDATION-SETTINGS (0x7f1922d7)]
+        vkCreateInstance(): Both GPU Assisted Validation and Normal Core Check Validation are enabled, this is not recommend as it  will be very slow. Once all errors in Core Check are solved, please disable, then only use GPU-AV for best performance.
+    [2026-09-19T06:13:18Z INFO  wgpu_core::instance] Instance::enumerate_adapters
+    [2026-09-19T06:13:18Z INFO  wgpu_core::instance] Adapter AdapterInfo { name: "llvmpipe (LLVM 22.1.8, 256 bits)", vendor: 65541, device: 0, device_type: Cpu, device_pci_bus_id: "", driver: "llvmpipe", driver_info: "Mesa 26.1.3 (git-bfce4dd45a) (LLVM 22.1.8)", backend: Vulkan, subgroup_min_size: 8, subgroup_max_size: 8, transient_saves_memory: Some(false), limit_bucket: None }
+    [2026-09-19T06:13:18Z WARN  wgpu_hal::vulkan::instance] VALIDATION [WARNING-Setting-Limit-Adjusted (0x86fe6721)]
+        vkCreateDevice(): Warning that validation is adjusting settings:
+        Forcing vertexPipelineStoresAndAtomics to VK_TRUE
+        Forcing shaderInt64 to VK_TRUE
+
+=== hardware-vulkan.log ===
+SHA256: 8AFF626AE6B10CAC4D0E41E38C8885A77048A8064E88237A31CBFCD705718A81
+    Starting 1 test across 1 binary (1 test and 42 binaries skipped)
+     Summary [   0.171s] 1 test run: 1 passed, 1 skipped
+    Starting 111 tests across 43 binaries (1440 tests skipped)
+        PASS [   0.783s] (  1/111) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: no sampled textures
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.785s] (  2/111) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: overlapping mixed views
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.034s] (  3/111) wgpu-core command::memory_init::tests::first_uses_preserve_order_and_gaps
+        PASS [   0.833s] (  4/111) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: discard then sample
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.924s] (  5/111) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: shared attachments
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.248s] ( 34/111) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::destroyed_texture
+    [2026-09-19T06:15:01Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::destroyed_texture
+        PASS [   0.231s] ( 35/111) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+    [2026-09-19T06:15:01Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+        PASS [   0.207s] ( 36/111) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+    [2026-09-19T06:15:01Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+        PASS [   0.202s] ( 37/111) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+    [2026-09-19T06:15:01Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+        PASS [   0.203s] ( 38/111) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::overlapping_views
+    [2026-09-19T06:15:01Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::overlapping_views
+        PASS [   0.216s] ( 39/111) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::partial_view
+    [2026-09-19T06:15:01Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::partial_view
+        PASS [   0.201s] ( 40/111) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::reordered_submissions
+    [2026-09-19T06:15:01Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::reordered_submissions
+        PASS [   0.220s] ( 85/111) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/1] wgpu_gpu::zero_init::texture_binding::destroyed_texture
+    [2026-09-19T06:15:04Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::destroyed_texture
+        PASS [   0.217s] ( 86/111) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/1] wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+    [2026-09-19T06:15:04Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+        PASS [   0.202s] ( 87/111) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/1] wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+    [2026-09-19T06:15:04Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+        PASS [   0.202s] ( 88/111) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/1] wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+    [2026-09-19T06:15:04Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+        PASS [   0.201s] ( 89/111) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/1] wgpu_gpu::zero_init::texture_binding::overlapping_views
+    [2026-09-19T06:15:04Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::overlapping_views
+        PASS [   0.217s] ( 90/111) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/1] wgpu_gpu::zero_init::texture_binding::partial_view
+    [2026-09-19T06:15:04Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::partial_view
+        PASS [   0.216s] ( 91/111) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/1] wgpu_gpu::zero_init::texture_binding::reordered_submissions
+    [2026-09-19T06:15:04Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::reordered_submissions
+     Summary [   6.765s] 111 tests run: 111 passed, 1440 skipped
+    [2026-09-19T06:15:00Z WARN  wgpu_hal::vulkan::instance] VALIDATION [WARNING-VkImageSubresourceRange-layerCount-compatibility (0x9b0d5645)]
+        vkCmdPipelineBarrier(): pImageMemoryBarriers[0].subresourceRange.layerCount is 1 for a 3D image (VkImage 0x1c000000001c[RenderTarget]) created with VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT. The maintenance9 feature is not currently enabled, so layerCount refers to all depth slices. When maintenance9 is enabled, it instead refers to a single depth slice. To remain forward-compatible, layerCount should be set to VK_REMAINING_ARRAY_LAYERS.
+    [2026-09-19T06:15:00Z WARN  wgpu_hal::vulkan::instance] objects: (type: COMMAND_BUFFER, hndl: 0x24781cfc6e8, name: (wgpu internal) PendingWrites)
+    [2026-09-19T06:15:00Z INFO  wgpu_core::device::queue] Queue::write_texture
+
+=== hardware-vulkan-single.log ===
+SHA256: 8C95E1936E4A542DBF41ABFA46F8C673596455E7AE7B3190907058F5F9AC5142
+    Starting 1 test across 1 binary (1 test and 42 binaries skipped)
+     Summary [   0.141s] 1 test run: 1 passed, 1 skipped
+    Starting 58 tests across 43 binaries (1493 tests skipped)
+        PASS [   0.682s] ( 1/58) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: no sampled textures
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.035s] ( 2/58) wgpu-core command::memory_init::tests::first_uses_preserve_order_and_gaps
+        PASS [   0.796s] ( 3/58) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: shared attachments
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.816s] ( 4/58) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: overlapping mixed views
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.823s] ( 5/58) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: discard then sample
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Vulkan)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.215s] (34/58) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::destroyed_texture
+    [2026-09-19T06:19:43Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::destroyed_texture
+        PASS [   0.214s] (35/58) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+    [2026-09-19T06:19:43Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+        PASS [   0.212s] (36/58) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+    [2026-09-19T06:19:43Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+        PASS [   0.200s] (37/58) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+    [2026-09-19T06:19:43Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+        PASS [   0.202s] (38/58) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::overlapping_views
+    [2026-09-19T06:19:43Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::overlapping_views
+        PASS [   0.204s] (39/58) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::reordered_submissions
+    [2026-09-19T06:19:44Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::reordered_submissions
+        PASS [   0.232s] (40/58) wgpu-test::wgpu-gpu [Executed] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::partial_view
+    [2026-09-19T06:19:44Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::partial_view
+     Summary [   3.706s] 58 tests run: 58 passed, 1493 skipped
+    [2026-09-19T06:19:42Z WARN  wgpu_hal::vulkan::instance] VALIDATION [WARNING-VkImageSubresourceRange-layerCount-compatibility (0x9b0d5645)]
+        vkCmdPipelineBarrier(): pImageMemoryBarriers[0].subresourceRange.layerCount is 1 for a 3D image (VkImage 0x1c000000001c[RenderTarget]) created with VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT. The maintenance9 feature is not currently enabled, so layerCount refers to all depth slices. When maintenance9 is enabled, it instead refers to a single depth slice. To remain forward-compatible, layerCount should be set to VK_REMAINING_ARRAY_LAYERS.
+    [2026-09-19T06:19:42Z WARN  wgpu_hal::vulkan::instance] objects: (type: COMMAND_BUFFER, hndl: 0x1fa5fc353a8, name: (wgpu internal) PendingWrites)
+    [2026-09-19T06:19:42Z INFO  wgpu_core::device::queue] Queue::write_texture
+
+=== hardware-dx12.log ===
+SHA256: 31E3F60D822ADEC549BF09F29B6F884CC2FB6E42957FDA17DFD7296A70E7B232
+    Starting 1 test across 1 binary (1 test and 42 binaries skipped)
+     Summary [   0.281s] 1 test run: 1 passed, 1 skipped
+    Starting 58 tests across 43 binaries (1493 tests skipped)
+        PASS [   1.129s] ( 1/58) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: no sampled textures
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Dx12)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.043s] ( 2/58) wgpu-core command::memory_init::tests::first_uses_preserve_order_and_gaps
+        PASS [   1.436s] ( 3/58) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: overlapping mixed views
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Dx12)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   1.501s] ( 4/58) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: shared attachments
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Dx12)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   1.512s] ( 5/58) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: discard then sample
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Dx12)
+    ERROR: SymInitialize FAILED with code 87 (0x57) | The parameter is incorrect.
+        PASS [   0.557s] (36/58) wgpu-test::wgpu-gpu [Executed] [Dx12/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::destroyed_texture
+    [2026-09-19T06:15:50Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::destroyed_texture
+        PASS [   0.574s] (37/58) wgpu-test::wgpu-gpu [Executed] [Dx12/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+    [2026-09-19T06:15:50Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::discard_same_encoder
+        PASS [   0.418s] (38/58) wgpu-test::wgpu-gpu [Executed] [Dx12/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+    [2026-09-19T06:15:50Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::dropped_command_buffer
+        PASS [   0.479s] (39/58) wgpu-test::wgpu-gpu [Executed] [Dx12/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+    [2026-09-19T06:15:50Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::discard_separate_submissions
+        PASS [   0.345s] (40/58) wgpu-test::wgpu-gpu [Executed] [Dx12/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::overlapping_views
+    [2026-09-19T06:15:50Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::overlapping_views
+        PASS [   0.359s] (41/58) wgpu-test::wgpu-gpu [Executed] [Dx12/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::partial_view
+    [2026-09-19T06:15:50Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::partial_view
+        PASS [   0.359s] (42/58) wgpu-test::wgpu-gpu [Executed] [Dx12/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::zero_init::texture_binding::reordered_submissions
+    [2026-09-19T06:15:50Z INFO  wgpu_test::run] TEST FINISHED: wgpu_gpu::zero_init::texture_binding::reordered_submissions
+     Summary [   6.991s] 58 tests run: 58 passed, 1493 skipped
+
+=== dx12-tracy-diagnostic.log ===
+SHA256: BE57F9BD872FD0ABC4E5C1BA220D6C8569AA1DAA243AA1C677EFE74FB598C859
+    Starting 1 test across 1 binary (1 test and 42 binaries skipped)
+     Summary [   0.206s] 1 test run: 1 passed, 1 skipped
+    Starting 4 tests across 43 binaries (1547 tests skipped)
+        PASS [   0.768s] (1/4) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: no sampled textures
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Dx12)
+        PASS [   0.991s] (2/4) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: overlapping mixed views
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Dx12)
+        PASS [   1.121s] (3/4) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: discard then sample
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Dx12)
+        PASS [   1.162s] (4/4) wgpu-benchmark::bench/wgpu-benchmark Texture Init Render: shared attachments
+      Using adapter: Intel(R) Arc(TM) B390 GPU (Dx12)
+     Summary [   1.166s] 4 tests run: 4 passed, 1547 skipped

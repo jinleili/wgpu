@@ -1,0 +1,992 @@
+{
+  "candidate": "f47afd2b6aa8872eb283e808363e180f3930e9e3",
+  "baseline": "f12c3e4508cb706c1e1faeb973bdb9c6970f5e15",
+  "tool_versions": "rustc 1.95.0 (59807616e 2026-04-14)\nbinary: rustc\ncommit-hash: 59807616e1fa2540724bfbac14d7976d7e4a3860\ncommit-date: 2026-04-14\nhost: x86_64-pc-windows-msvc\nrelease: 1.95.0\nLLVM version: 22.1.2\ncargo 1.95.0 (f2d3ce0bd 2026-03-21)\ncargo-nextest 0.9.145 (00af4550e 2026-09-16)\nrelease: 0.9.145\ncommit-hash: 00af4550ec3b3b9f0e574b897b06acb95d325ba2\ncommit-date: 2026-09-16\nhost: x86_64-pc-windows-msvc\ndxcompiler.dll: 1.9(5191-d355aa83)(1.9.2602.24) - 1.9.2602.24 (d355aa836)\r\n用法: cl [ 选项... ] 文件名... [ /link 链接选项... ]\r\nMicrosoft (R) C/C++ Optimizing Compiler Version 19.51.36252 for x64\r\n版权所有(C) Microsoft Corporation。保留所有权利。\r\n\r\nCaption        : Microsoft Windows 11 家庭版 中文版\r\nVersion        : 10.0.26200\r\nOSArchitecture : 64 位\r\n\r\n\r\nName          : GameViewer Virtual Display Adapter\r\nDriverVersion : 15.6.5.199\r\n\r\nName          : Intel(R) Arc(TM) B390 GPU\r\nDriverVersion : 32.0.101.8860\r\n\r\n",
+  "download_hashes": [
+    {
+      "Path": "D:\\rust\\forks\\wgpu\\target\\issue-8518-windows\\mesa-iwr.7z",
+      "Hash": "6DD431F4620CEA73970B13E3FFA94F721F2A3924306B8A4283C97648CDB6EB9C"
+    },
+    {
+      "Path": "D:\\rust\\forks\\wgpu\\target\\issue-8518-windows\\dxc.zip",
+      "Hash": "CF658AACF070D3045E31B8F1F8A696C2945F37C1095019481EF7C513368DB3B4"
+    },
+    {
+      "Path": "D:\\rust\\forks\\wgpu\\target\\issue-8518-windows\\nextest.zip",
+      "Hash": "5BC4B6789103E9834F596EFF2B290CFB5B2B69E5413C78BBAA5ACC835AC5BAA0"
+    },
+    {
+      "Path": "D:\\rust\\forks\\wgpu\\target\\issue-8518-windows\\vulkan-sdk.exe",
+      "Hash": "81F474711E9042F4CD22B31B2F7A8870DB2E428B21586FB43DD80150BE97310D"
+    },
+    {
+      "Path": "D:\\rust\\forks\\wgpu\\target\\issue-8518-windows\\mach-dxc.tar.gz",
+      "Hash": "B5E1A7DD3C2D57E1AC27A357003B39D1C58ECDAC3D548ACA0EF4127F2833D2E1"
+    }
+  ],
+  "source_verification": {
+    "time": "2026-09-19T14:26:18.8364048+08:00",
+    "head": "f47afd2b6aa8872eb283e808363e180f3930e9e3",
+    "branch": "codex/issue-8518-texture-folding",
+    "base": "f12c3e4508cb706c1e1faeb973bdb9c6970f5e15",
+    "main_status": [],
+    "fault_status": [],
+    "main_hash": "76EF071552F40CCFA9A844EE6EB4DF9804F0749714A59C75186AE02192B01B28",
+    "fault_hash": "76EF071552F40CCFA9A844EE6EB4DF9804F0749714A59C75186AE02192B01B28",
+    "driver_environment_variables": 0
+  },
+  "runs": [
+    {
+      "label": "lavapipe-targeted-ready",
+      "command": {
+        "label": "lavapipe-targeted-ready",
+        "time": "2026-09-19T14:09:09.5039702+08:00",
+        "cwd": "D:/rust/forks/wgpu",
+        "head": "f47afd2b6aa8872eb283e808363e180f3930e9e3",
+        "command": "cargo",
+        "args": [
+          "xtask",
+          "test",
+          "--test-threads",
+          "4",
+          "--status-level",
+          "all",
+          "--final-status-level",
+          "all",
+          "--success-output",
+          "immediate",
+          "--failure-output",
+          "immediate",
+          "-E",
+          "test(first_uses_preserve_order_and_gaps) | test(zero_init::texture_binding) | test(Texture Init Render)"
+        ],
+        "environment": {
+          "RUSTUP_TOOLCHAIN": "1.95.0-x86_64-pc-windows-msvc",
+          "WGPU_ADAPTER_NAME": "llvmpipe",
+          "WGPU_DX12_COMPILER": "D:/rust/forks/wgpu/target/issue-8518-windows/dxc/bin/x64/dxcompiler.dll",
+          "WGPU_BACKEND": "vulkan",
+          "CARGO_TARGET_DIR": "D:/rust/forks/wgpu/target/issue-8518-windows/build",
+          "VK_LAYER_PATH": "D:/rust/forks/wgpu/target/issue-8518-windows/vulkan/Bin",
+          "CARGO_PROFILE_DEV_DEBUG": "line-tables-only",
+          "GALLIUM_DRIVER": "llvmpipe",
+          "LVP_POISON_MEMORY": "true",
+          "VK_DRIVER_FILES": "D:/rust/forks/wgpu/target/issue-8518-windows/mesa/x64/lvp_icd.x86_64.json"
+        }
+      },
+      "result": {
+        "finished": "2026-09-19T14:09:51.8954253+08:00",
+        "exit": 0
+      },
+      "summary": {
+        "label": "lavapipe-targeted-ready",
+        "summary": "Summary [   1.307s] 12 tests run: 12 passed, 1115 skipped",
+        "selected": 12,
+        "actually_executed": 12,
+        "passed": 12,
+        "failed": 0,
+        "semantic_skipped": 0,
+        "test_finished_markers": 7,
+        "failures": [],
+        "skips": []
+      },
+      "raw_log_sha256": "11B7FBEE0882EE45398A8C04D78890C590B093586975762819C6676532B86C25",
+      "adapters": [
+        {
+          "name": "llvmpipe (LLVM 22.1.8, 256 bits)",
+          "vendor": 65541,
+          "device": 0,
+          "device_type": "Cpu",
+          "device_pci_bus_id": "",
+          "driver": "llvmpipe",
+          "driver_info": "Mesa 26.1.3 (git-bfce4dd45a) (LLVM 22.1.8)",
+          "backend": "Vulkan",
+          "subgroup_min_size": 8,
+          "subgroup_max_size": 8,
+          "transient_saves_memory": false,
+          "limit_bucket": null
+        }
+      ]
+    },
+    {
+      "label": "lavapipe-zero-init",
+      "command": {
+        "label": "lavapipe-zero-init",
+        "time": "2026-09-19T14:10:06.0762189+08:00",
+        "cwd": "D:/rust/forks/wgpu",
+        "head": "f47afd2b6aa8872eb283e808363e180f3930e9e3",
+        "command": "cargo",
+        "args": [
+          "xtask",
+          "test",
+          "--test-threads",
+          "4",
+          "--status-level",
+          "all",
+          "--final-status-level",
+          "all",
+          "--success-output",
+          "immediate",
+          "--failure-output",
+          "immediate",
+          "-E",
+          "binary(wgpu-gpu) & test(zero_init)"
+        ],
+        "environment": {
+          "VK_LAYER_PATH": "D:/rust/forks/wgpu/target/issue-8518-windows/vulkan/Bin",
+          "CARGO_TARGET_DIR": "D:/rust/forks/wgpu/target/issue-8518-windows/build",
+          "CARGO_PROFILE_DEV_DEBUG": "line-tables-only",
+          "GALLIUM_DRIVER": "llvmpipe",
+          "WGPU_ADAPTER_NAME": "llvmpipe",
+          "LVP_POISON_MEMORY": "true",
+          "RUSTUP_TOOLCHAIN": "1.95.0-x86_64-pc-windows-msvc",
+          "WGPU_DX12_COMPILER": "D:/rust/forks/wgpu/target/issue-8518-windows/dxc/bin/x64/dxcompiler.dll",
+          "WGPU_BACKEND": "vulkan",
+          "VK_DRIVER_FILES": "D:/rust/forks/wgpu/target/issue-8518-windows/mesa/x64/lvp_icd.x86_64.json"
+        }
+      },
+      "result": {
+        "exit": 0,
+        "finished": "2026-09-19T14:10:12.2623694+08:00"
+      },
+      "summary": {
+        "label": "lavapipe-zero-init",
+        "summary": "Summary [   3.844s] 53 tests run: 53 passed, 335 skipped",
+        "selected": 53,
+        "actually_executed": 51,
+        "passed": 51,
+        "failed": 0,
+        "semantic_skipped": 2,
+        "test_finished_markers": 51,
+        "failures": [],
+        "skips": [
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_from_view_zero_init_after_discard",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_zero_init_after_discard",
+            "semantic_skip": true
+          }
+        ]
+      },
+      "raw_log_sha256": "21AE04461B9BBE0AB92F77D638E5DA203205559B371ED6B275B7EAADA0E39EAC",
+      "adapters": [
+        {
+          "name": "llvmpipe (LLVM 22.1.8, 256 bits)",
+          "vendor": 65541,
+          "device": 0,
+          "device_type": "Cpu",
+          "device_pci_bus_id": "",
+          "driver": "llvmpipe",
+          "driver_info": "Mesa 26.1.3 (git-bfce4dd45a) (LLVM 22.1.8)",
+          "backend": "Vulkan",
+          "subgroup_min_size": 8,
+          "subgroup_max_size": 8,
+          "transient_saves_memory": false,
+          "limit_bucket": null
+        }
+      ]
+    },
+    {
+      "label": "fault-injected",
+      "command": {
+        "args": [
+          "nextest",
+          "run",
+          "--locked",
+          "--benches",
+          "--tests",
+          "--all-features",
+          "-E",
+          "binary(wgpu-gpu) & test(zero_init::texture_binding::dropped_command_buffer)",
+          "--success-output",
+          "immediate",
+          "--failure-output",
+          "immediate"
+        ],
+        "head": "f47afd2b6aa8872eb283e808363e180f3930e9e3",
+        "command": "cargo",
+        "expected": "one failure: zero expected, poison observed",
+        "cwd": "D:\\rust\\forks\\wgpu\\target\\issue-8518-windows\\fault",
+        "patch": "../fault-injection.patch",
+        "environment": {
+          "RUSTUP_TOOLCHAIN": "1.95.0-x86_64-pc-windows-msvc",
+          "WGPU_ADAPTER_NAME": "llvmpipe",
+          "WGPU_DX12_COMPILER": "D:/rust/forks/wgpu/target/issue-8518-windows/dxc/bin/x64/dxcompiler.dll",
+          "WGPU_BACKEND": "vulkan",
+          "CARGO_TARGET_DIR": "D:/rust/forks/wgpu/target/issue-8518-windows/build",
+          "VK_LAYER_PATH": "D:/rust/forks/wgpu/target/issue-8518-windows/vulkan/Bin",
+          "CARGO_PROFILE_DEV_DEBUG": "line-tables-only",
+          "GALLIUM_DRIVER": "llvmpipe",
+          "LVP_POISON_MEMORY": "true",
+          "VK_DRIVER_FILES": "D:/rust/forks/wgpu/target/issue-8518-windows/mesa/x64/lvp_icd.x86_64.json"
+        }
+      },
+      "result": {
+        "exit": 100
+      },
+      "summary": {
+        "label": "fault-injected",
+        "summary": "Summary [   0.326s] 1 test run: 0 passed, 1 failed, 387 skipped",
+        "selected": 1,
+        "actually_executed": 1,
+        "passed": 0,
+        "failed": 1,
+        "semantic_skipped": 0,
+        "test_finished_markers": 0,
+        "failures": [
+          {
+            "status": "FAIL",
+            "name": "wgpu-test::wgpu-gpu [Executed] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::zero_init::texture_binding::dropped_command_buffer",
+            "semantic_skip": false
+          }
+        ],
+        "skips": []
+      },
+      "raw_log_sha256": "F3E79BE97261D905B5FD1066EE4063A33B9EEA4FF6EA512DAD484327C7B573A8"
+    },
+    {
+      "label": "fault-restored",
+      "command": {
+        "head": "f47afd2b6aa8872eb283e808363e180f3930e9e3",
+        "command": "cargo",
+        "args": [
+          "nextest",
+          "run",
+          "--locked",
+          "--benches",
+          "--tests",
+          "--all-features",
+          "-E",
+          "binary(wgpu-gpu) & test(zero_init::texture_binding::dropped_command_buffer)",
+          "--success-output",
+          "immediate",
+          "--failure-output",
+          "immediate"
+        ],
+        "cwd": "D:\\rust\\forks\\wgpu\\target\\issue-8518-windows\\fault",
+        "environment": {
+          "RUSTUP_TOOLCHAIN": "1.95.0-x86_64-pc-windows-msvc",
+          "WGPU_ADAPTER_NAME": "llvmpipe",
+          "WGPU_DX12_COMPILER": "D:/rust/forks/wgpu/target/issue-8518-windows/dxc/bin/x64/dxcompiler.dll",
+          "WGPU_BACKEND": "vulkan",
+          "CARGO_TARGET_DIR": "D:/rust/forks/wgpu/target/issue-8518-windows/build",
+          "VK_LAYER_PATH": "D:/rust/forks/wgpu/target/issue-8518-windows/vulkan/Bin",
+          "CARGO_PROFILE_DEV_DEBUG": "line-tables-only",
+          "GALLIUM_DRIVER": "llvmpipe",
+          "LVP_POISON_MEMORY": "true",
+          "VK_DRIVER_FILES": "D:/rust/forks/wgpu/target/issue-8518-windows/mesa/x64/lvp_icd.x86_64.json"
+        }
+      },
+      "result": {
+        "exit": 0
+      },
+      "summary": {
+        "label": "fault-restored",
+        "summary": "Summary [   0.219s] 1 test run: 1 passed, 387 skipped",
+        "selected": 1,
+        "actually_executed": 1,
+        "passed": 1,
+        "failed": 0,
+        "semantic_skipped": 0,
+        "test_finished_markers": 1,
+        "failures": [],
+        "skips": []
+      },
+      "raw_log_sha256": "04C368069309812DD0B5E2AC9F7EF270648E4F02A8D4DAE0CBA4FF52F5C9C8D3"
+    },
+    {
+      "label": "lavapipe-full",
+      "command": {
+        "label": "lavapipe-full",
+        "time": "2026-09-19T14:12:43.9770634+08:00",
+        "cwd": "D:/rust/forks/wgpu",
+        "head": "f47afd2b6aa8872eb283e808363e180f3930e9e3",
+        "command": "cargo",
+        "args": [
+          "xtask",
+          "test",
+          "--test-threads",
+          "4",
+          "--status-level",
+          "pass",
+          "--final-status-level",
+          "fail",
+          "--success-output",
+          "immediate",
+          "--failure-output",
+          "immediate"
+        ],
+        "environment": {
+          "GALLIUM_DRIVER": "llvmpipe",
+          "WGPU_BACKEND": "vulkan",
+          "VK_LAYER_PATH": "D:/rust/forks/wgpu/target/issue-8518-windows/vulkan/Bin",
+          "WGPU_DX12_COMPILER": "D:/rust/forks/wgpu/target/issue-8518-windows/dxc/bin/x64/dxcompiler.dll",
+          "CARGO_TARGET_DIR": "D:/rust/forks/wgpu/target/issue-8518-windows/build",
+          "CARGO_PROFILE_DEV_DEBUG": "line-tables-only",
+          "WGPU_ADAPTER_NAME": "llvmpipe",
+          "VK_DRIVER_FILES": "D:/rust/forks/wgpu/target/issue-8518-windows/mesa/x64/lvp_icd.x86_64.json",
+          "LVP_POISON_MEMORY": "true",
+          "RUSTUP_TOOLCHAIN": "1.95.0-x86_64-pc-windows-msvc"
+        }
+      },
+      "result": {
+        "finished": "2026-09-19T14:14:28.2989132+08:00",
+        "exit": 0
+      },
+      "summary": {
+        "label": "lavapipe-full",
+        "summary": "Summary [  95.158s] 1121 tests run: 1121 passed, 6 skipped",
+        "selected": 1121,
+        "actually_executed": 1072,
+        "passed": 1072,
+        "failed": 0,
+        "semantic_skipped": 49,
+        "test_finished_markers": 369,
+        "failures": [],
+        "skips": [
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::clear_texture::clear_texture_compressed_astc",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::clear_texture::clear_texture_compressed_etc2",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-examples [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] mesh_shader",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-examples [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] conservative-raster",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-examples [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] skybox-astc",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-examples [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] skybox-etc2",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: BACKEND | ADAPTER] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::binding_array::buffers::binding_array_uniform_buffers",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: BACKEND | ADAPTER] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::binding_array::buffers::partial_binding_array_uniform_buffers",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::buffer_resource_limits::buffers_and_accel_structs_exceeds_across_bgls",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::buffer_resource_limits::buffers_and_accel_structs_exceeds_single_bgl",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::buffer_resource_limits::buffers_and_accel_structs_valid_vertex_stage_at_limit",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::buffer_resource_limits::buffers_and_accel_structs_valid_within_limit",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::buffer_resource_limits::buffers_and_accel_structs_vertex_stage_exceeds_with_vertex_buffers",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::oob_indexing::d3d12_restrict_dynamic_buffers",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::passthrough::dxil_passthrough_shader",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::passthrough::glsl_passthrough_shader",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::passthrough::metal_passthrough_shader",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::passthrough::metallib_passthrough_shader",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::passthrough::hlsl_passthrough_shader",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::passthrough::wgsl_passthrough_shader",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_draw",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_draw_divergent",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::poll::wait_indefinitely_long_running",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_draw_indirect",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_draw_no_task",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_multi_draw_indirect",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_multi_draw_indirect_count",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_pipeline_basic_mesh",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_pipeline_basic_mesh_frag",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_pipeline_basic_mesh_no_draw",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_pipeline_basic_task_mesh",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_pipeline_basic_task_mesh_frag",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_from_view_zero_init_after_discard",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_pipeline_basic_task_mesh_frag_no_draw",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_dimensions",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_load",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_load_invalid_address",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_load_transform",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_sample",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_load_yuv",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_sample_transform",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_sample_yuv",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_zero_init_after_discard",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::life_cycle::external_texture_destroy_before_submit",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::shader_barycentric::barycentric",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::per_vertex::per_vertex",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Limits] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::timestamp_normalization::utils::shift_right_u96",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::shader_barycentric::barycentric_no_perspective",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Limits] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::timestamp_normalization::utils::u64_mul_u32",
+            "semantic_skip": true
+          }
+        ]
+      },
+      "raw_log_sha256": "38157B76A9F56A9E11B01B890F13A927A67AF3201DA21C4DECF2D3EF53F3E031",
+      "adapters": [
+        {
+          "name": "llvmpipe (LLVM 22.1.8, 256 bits)",
+          "vendor": 65541,
+          "device": 0,
+          "device_type": "Cpu",
+          "device_pci_bus_id": "",
+          "driver": "llvmpipe",
+          "driver_info": "Mesa 26.1.3 (git-bfce4dd45a) (LLVM 22.1.8)",
+          "backend": "Vulkan",
+          "subgroup_min_size": 8,
+          "subgroup_max_size": 8,
+          "transient_saves_memory": false,
+          "limit_bucket": null
+        }
+      ],
+      "default_filter_skipped": 6,
+      "total_scope": 1127,
+      "total_skipped": 55
+    },
+    {
+      "label": "hardware-vulkan",
+      "command": {
+        "label": "hardware-vulkan",
+        "time": "2026-09-19T14:14:54.4915837+08:00",
+        "cwd": "D:/rust/forks/wgpu",
+        "head": "f47afd2b6aa8872eb283e808363e180f3930e9e3",
+        "command": "cargo",
+        "args": [
+          "xtask",
+          "test",
+          "--test-threads",
+          "4",
+          "--status-level",
+          "pass",
+          "--final-status-level",
+          "fail",
+          "--success-output",
+          "immediate",
+          "--failure-output",
+          "immediate",
+          "-E",
+          "test(first_uses_preserve_order_and_gaps) | test(Texture Init Render) | (binary(wgpu-gpu) & test(zero_init) & test(Intel))"
+        ],
+        "environment": {
+          "VK_DRIVER_FILES": null,
+          "WGPU_ADAPTER_NAME": "Intel(R) Arc(TM) B390 GPU",
+          "WGPU_BACKEND": "vulkan",
+          "RUSTUP_TOOLCHAIN": "1.95.0-x86_64-pc-windows-msvc",
+          "WGPU_DX12_COMPILER": "D:/rust/forks/wgpu/target/issue-8518-windows/dxc/bin/x64/dxcompiler.dll",
+          "VK_LAYER_PATH": "D:/rust/forks/wgpu/target/issue-8518-windows/vulkan/Bin",
+          "GALLIUM_DRIVER": null,
+          "CARGO_TARGET_DIR": "D:/rust/forks/wgpu/target/issue-8518-windows/build",
+          "CARGO_PROFILE_DEV_DEBUG": "line-tables-only",
+          "LVP_POISON_MEMORY": null
+        }
+      },
+      "result": {
+        "finished": "2026-09-19T14:15:05.5071165+08:00",
+        "exit": 0
+      },
+      "summary": {
+        "label": "hardware-vulkan",
+        "summary": "Summary [   6.765s] 111 tests run: 111 passed, 1440 skipped",
+        "selected": 111,
+        "actually_executed": 107,
+        "passed": 107,
+        "failed": 0,
+        "semantic_skipped": 4,
+        "test_finished_markers": 102,
+        "failures": [],
+        "skips": [
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::external_texture::external_texture_from_view_zero_init_after_discard",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::external_texture::external_texture_zero_init_after_discard",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/Intel(R) Arc(TM) B390 GPU/1] wgpu_gpu::external_texture::external_texture_from_view_zero_init_after_discard",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/Intel(R) Arc(TM) B390 GPU/1] wgpu_gpu::external_texture::external_texture_zero_init_after_discard",
+            "semantic_skip": true
+          }
+        ]
+      },
+      "raw_log_sha256": "8AFF626AE6B10CAC4D0E41E38C8885A77048A8064E88237A31CBFCD705718A81",
+      "adapters": [
+        {
+          "name": "Intel(R) Arc(TM) B390 GPU",
+          "vendor": 32902,
+          "device": 45184,
+          "device_type": "IntegratedGpu",
+          "device_pci_bus_id": "",
+          "driver": "Intel Corporation",
+          "driver_info": "101.8860",
+          "backend": "Vulkan",
+          "subgroup_min_size": 16,
+          "subgroup_max_size": 32,
+          "transient_saves_memory": false,
+          "limit_bucket": null
+        },
+        {
+          "name": "Intel(R) Arc(TM) B390 GPU",
+          "vendor": 32902,
+          "device": 45184,
+          "device_type": "IntegratedGpu",
+          "device_pci_bus_id": "",
+          "driver": "Intel Corporation",
+          "driver_info": "101.8860",
+          "backend": "Vulkan",
+          "subgroup_min_size": 16,
+          "subgroup_max_size": 32,
+          "transient_saves_memory": false,
+          "limit_bucket": null
+        }
+      ]
+    },
+    {
+      "label": "hardware-vulkan-single",
+      "command": {
+        "label": "hardware-vulkan-single",
+        "time": "2026-09-19T14:19:38.2420834+08:00",
+        "cwd": "D:/rust/forks/wgpu",
+        "head": "f47afd2b6aa8872eb283e808363e180f3930e9e3",
+        "command": "cargo",
+        "args": [
+          "xtask",
+          "test",
+          "--test-threads",
+          "4",
+          "--status-level",
+          "pass",
+          "--final-status-level",
+          "fail",
+          "--success-output",
+          "immediate",
+          "--failure-output",
+          "immediate",
+          "-E",
+          "test(first_uses_preserve_order_and_gaps) | test(Texture Init Render) | (binary(wgpu-gpu) & test(zero_init) & test(Intel) & test(/GPU\\/0\\]/))"
+        ],
+        "environment": {
+          "LVP_POISON_MEMORY": null,
+          "WGPU_BACKEND": "vulkan",
+          "VK_DRIVER_FILES": null,
+          "WGPU_ADAPTER_NAME": "Intel(R) Arc(TM) B390 GPU",
+          "GALLIUM_DRIVER": null,
+          "VK_LAYER_PATH": "D:/rust/forks/wgpu/target/issue-8518-windows/vulkan/Bin",
+          "WGPU_DX12_COMPILER": "D:/rust/forks/wgpu/target/issue-8518-windows/dxc/bin/x64/dxcompiler.dll",
+          "RUSTUP_TOOLCHAIN": "1.95.0-x86_64-pc-windows-msvc",
+          "CARGO_PROFILE_DEV_DEBUG": "line-tables-only",
+          "CARGO_TARGET_DIR": "D:/rust/forks/wgpu/target/issue-8518-windows/build"
+        }
+      },
+      "result": {
+        "exit": 0,
+        "finished": "2026-09-19T14:19:44.97278+08:00"
+      },
+      "summary": {
+        "label": "hardware-vulkan-single",
+        "summary": "Summary [   3.706s] 58 tests run: 58 passed, 1493 skipped",
+        "selected": 58,
+        "actually_executed": 56,
+        "passed": 56,
+        "failed": 0,
+        "semantic_skipped": 2,
+        "test_finished_markers": 51,
+        "failures": [],
+        "skips": [
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::external_texture::external_texture_from_view_zero_init_after_discard",
+            "semantic_skip": true
+          },
+          {
+            "status": "PASS",
+            "name": "wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/Intel(R) Arc(TM) B390 GPU/0] wgpu_gpu::external_texture::external_texture_zero_init_after_discard",
+            "semantic_skip": true
+          }
+        ]
+      },
+      "raw_log_sha256": "8C95E1936E4A542DBF41ABFA46F8C673596455E7AE7B3190907058F5F9AC5142",
+      "adapters": [
+        {
+          "name": "Intel(R) Arc(TM) B390 GPU",
+          "vendor": 32902,
+          "device": 45184,
+          "device_type": "IntegratedGpu",
+          "device_pci_bus_id": "",
+          "driver": "Intel Corporation",
+          "driver_info": "101.8860",
+          "backend": "Vulkan",
+          "subgroup_min_size": 16,
+          "subgroup_max_size": 32,
+          "transient_saves_memory": false,
+          "limit_bucket": null
+        },
+        {
+          "name": "Intel(R) Arc(TM) B390 GPU",
+          "vendor": 32902,
+          "device": 45184,
+          "device_type": "IntegratedGpu",
+          "device_pci_bus_id": "",
+          "driver": "Intel Corporation",
+          "driver_info": "101.8860",
+          "backend": "Vulkan",
+          "subgroup_min_size": 16,
+          "subgroup_max_size": 32,
+          "transient_saves_memory": false,
+          "limit_bucket": null
+        }
+      ]
+    },
+    {
+      "label": "hardware-dx12",
+      "command": {
+        "label": "hardware-dx12",
+        "time": "2026-09-19T14:15:42.3198051+08:00",
+        "cwd": "D:/rust/forks/wgpu",
+        "head": "f47afd2b6aa8872eb283e808363e180f3930e9e3",
+        "command": "cargo",
+        "args": [
+          "xtask",
+          "test",
+          "--test-threads",
+          "4",
+          "--status-level",
+          "pass",
+          "--final-status-level",
+          "fail",
+          "--success-output",
+          "immediate",
+          "--failure-output",
+          "immediate",
+          "-E",
+          "test(first_uses_preserve_order_and_gaps) | test(Texture Init Render) | (binary(wgpu-gpu) & test(zero_init) & test(Intel))"
+        ],
+        "environment": {
+          "CARGO_PROFILE_DEV_DEBUG": "line-tables-only",
+          "WGPU_BACKEND": "dx12",
+          "WGPU_DX12_COMPILER": "D:/rust/forks/wgpu/target/issue-8518-windows/dxc/bin/x64/dxcompiler.dll",
+          "RUSTUP_TOOLCHAIN": "1.95.0-x86_64-pc-windows-msvc",
+          "WGPU_ADAPTER_NAME": "Intel(R) Arc(TM) B390 GPU",
+          "GALLIUM_DRIVER": null,
+          "LVP_POISON_MEMORY": null,
+          "CARGO_TARGET_DIR": "D:/rust/forks/wgpu/target/issue-8518-windows/build",
+          "VK_DRIVER_FILES": null,
+          "VK_LAYER_PATH": "D:/rust/forks/wgpu/target/issue-8518-windows/vulkan/Bin"
+        }
+      },
+      "result": {
+        "exit": 0,
+        "finished": "2026-09-19T14:15:52.4788039+08:00"
+      },
+      "summary": {
+        "label": "hardware-dx12",
+        "summary": "Summary [   6.991s] 58 tests run: 58 passed, 1493 skipped",
+        "selected": 58,
+        "actually_executed": 58,
+        "passed": 58,
+        "failed": 0,
+        "semantic_skipped": 0,
+        "test_finished_markers": 53,
+        "failures": [],
+        "skips": []
+      },
+      "raw_log_sha256": "31E3F60D822ADEC549BF09F29B6F884CC2FB6E42957FDA17DFD7296A70E7B232",
+      "adapters": [
+        {
+          "name": "Intel(R) Arc(TM) B390 GPU",
+          "vendor": 32902,
+          "device": 45184,
+          "device_type": "IntegratedGpu",
+          "device_pci_bus_id": "0000:00:02.0",
+          "driver": "32.0.101.8860",
+          "driver_info": "",
+          "backend": "Dx12",
+          "subgroup_min_size": 16,
+          "subgroup_max_size": 32,
+          "transient_saves_memory": false,
+          "limit_bucket": null
+        },
+        {
+          "name": "Microsoft Basic Render Driver",
+          "vendor": 5140,
+          "device": 140,
+          "device_type": "Cpu",
+          "device_pci_bus_id": "",
+          "driver": "1.0.20.0",
+          "driver_info": "",
+          "backend": "Dx12",
+          "subgroup_min_size": 4,
+          "subgroup_max_size": 128,
+          "transient_saves_memory": false,
+          "limit_bucket": null
+        }
+      ]
+    },
+    {
+      "label": "dx12-tracy-diagnostic",
+      "command": {
+        "label": "dx12-tracy-diagnostic",
+        "time": "2026-09-19T14:19:09.8049795+08:00",
+        "cwd": "D:/rust/forks/wgpu",
+        "head": "f47afd2b6aa8872eb283e808363e180f3930e9e3",
+        "command": "cargo",
+        "args": [
+          "xtask",
+          "test",
+          "--test-threads",
+          "4",
+          "--status-level",
+          "pass",
+          "--final-status-level",
+          "fail",
+          "--success-output",
+          "immediate",
+          "--failure-output",
+          "immediate",
+          "-E",
+          "test(Texture Init Render)"
+        ],
+        "environment": {
+          "VK_LAYER_PATH": "D:/rust/forks/wgpu/target/issue-8518-windows/vulkan/Bin",
+          "CARGO_PROFILE_DEV_DEBUG": "line-tables-only",
+          "RUSTUP_TOOLCHAIN": "1.95.0-x86_64-pc-windows-msvc",
+          "VK_DRIVER_FILES": null,
+          "LVP_POISON_MEMORY": null,
+          "WGPU_ADAPTER_NAME": "Intel(R) Arc(TM) B390 GPU",
+          "CARGO_TARGET_DIR": "D:/rust/forks/wgpu/target/issue-8518-windows/build",
+          "WGPU_BACKEND": "dx12",
+          "WGPU_DX12_COMPILER": "D:/rust/forks/wgpu/target/issue-8518-windows/dxc/bin/x64/dxcompiler.dll",
+          "GALLIUM_DRIVER": null,
+          "TRACY_SYMBOL_OFFLINE_RESOLVE": "1"
+        }
+      },
+      "result": {
+        "exit": 0,
+        "finished": "2026-09-19T14:19:14.0480901+08:00"
+      },
+      "summary": {
+        "label": "dx12-tracy-diagnostic",
+        "summary": "Summary [   1.166s] 4 tests run: 4 passed, 1547 skipped",
+        "selected": 4,
+        "actually_executed": 4,
+        "passed": 4,
+        "failed": 0,
+        "semantic_skipped": 0,
+        "test_finished_markers": 0,
+        "failures": [],
+        "skips": []
+      },
+      "raw_log_sha256": "BE57F9BD872FD0ABC4E5C1BA220D6C8569AA1DAA243AA1C677EFE74FB598C859",
+      "adapters": [
+        {
+          "name": "Intel(R) Arc(TM) B390 GPU",
+          "vendor": 32902,
+          "device": 45184,
+          "device_type": "IntegratedGpu",
+          "device_pci_bus_id": "0000:00:02.0",
+          "driver": "32.0.101.8860",
+          "driver_info": "",
+          "backend": "Dx12",
+          "subgroup_min_size": 16,
+          "subgroup_max_size": 32,
+          "transient_saves_memory": false,
+          "limit_bucket": null
+        },
+        {
+          "name": "Microsoft Basic Render Driver",
+          "vendor": 5140,
+          "device": 140,
+          "device_type": "Cpu",
+          "device_pci_bus_id": "",
+          "driver": "1.0.20.0",
+          "driver_info": "",
+          "backend": "Dx12",
+          "subgroup_min_size": 4,
+          "subgroup_max_size": 128,
+          "transient_saves_memory": false,
+          "limit_bucket": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::clear_texture::clear_texture_compressed_astc
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::clear_texture::clear_texture_compressed_etc2
+wgpu-examples [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] mesh_shader
+wgpu-examples [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] conservative-raster
+wgpu-examples [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] skybox-astc
+wgpu-examples [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] skybox-etc2
+wgpu-test::wgpu-gpu [Skipped Failure: BACKEND | ADAPTER] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::binding_array::buffers::binding_array_uniform_buffers
+wgpu-test::wgpu-gpu [Skipped Failure: BACKEND | ADAPTER] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::binding_array::buffers::partial_binding_array_uniform_buffers
+wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::buffer_resource_limits::buffers_and_accel_structs_exceeds_across_bgls
+wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::buffer_resource_limits::buffers_and_accel_structs_exceeds_single_bgl
+wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::buffer_resource_limits::buffers_and_accel_structs_valid_vertex_stage_at_limit
+wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::buffer_resource_limits::buffers_and_accel_structs_valid_within_limit
+wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::buffer_resource_limits::buffers_and_accel_structs_vertex_stage_exceeds_with_vertex_buffers
+wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::oob_indexing::d3d12_restrict_dynamic_buffers
+wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::passthrough::dxil_passthrough_shader
+wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::passthrough::glsl_passthrough_shader
+wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::passthrough::metal_passthrough_shader
+wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::passthrough::metallib_passthrough_shader
+wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::passthrough::hlsl_passthrough_shader
+wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::passthrough::wgsl_passthrough_shader
+wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_draw
+wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_draw_divergent
+wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::poll::wait_indefinitely_long_running
+wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_draw_indirect
+wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_draw_no_task
+wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_multi_draw_indirect
+wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_multi_draw_indirect_count
+wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_pipeline_basic_mesh
+wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_pipeline_basic_mesh_frag
+wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_pipeline_basic_mesh_no_draw
+wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_pipeline_basic_task_mesh
+wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_pipeline_basic_task_mesh_frag
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_from_view_zero_init_after_discard
+wgpu-test::wgpu-gpu [Skipped Failure: VENDOR] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::mesh_shader::mesh_pipeline_basic_task_mesh_frag_no_draw
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_dimensions
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_load
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_load_invalid_address
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_load_transform
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_sample
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_load_yuv
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_sample_transform
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_sample_yuv
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::external_texture::external_texture_zero_init_after_discard
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::life_cycle::external_texture_destroy_before_submit
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::shader_barycentric::barycentric
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::per_vertex::per_vertex
+wgpu-test::wgpu-gpu [Unsupported: Limits] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::timestamp_normalization::utils::shift_right_u96
+wgpu-test::wgpu-gpu [Unsupported: Features] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::shader_barycentric::barycentric_no_perspective
+wgpu-test::wgpu-gpu [Unsupported: Limits] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::timestamp_normalization::utils::u64_mul_u32
+        SKIP [         ] (─────) wgpu-test::wgpu-gpu [Skipped Failure: BACKEND | ADAPTER] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::oom::blas_oom_test
+        SKIP [         ] (─────) wgpu-test::wgpu-gpu [Skipped Failure: BACKEND | ADAPTER] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::oom::buffer_oom_test
+        SKIP [         ] (─────) wgpu-test::wgpu-gpu [Skipped Failure: BACKEND | ADAPTER] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::oom::mapping_buffer_oom_test
+        SKIP [         ] (─────) wgpu-test::wgpu-gpu [Skipped Failure: BACKEND | ADAPTER] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::oom::texture_oom_test
+        SKIP [         ] (─────) wgpu-test::wgpu-gpu [Skipped Failure: BACKEND | ADAPTER] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::oom::tlas_oom_test
+        SKIP [         ] (─────) wgpu-test::wgpu-gpu [Skipped Failure: BACKEND] [Vulkan/llvmpipe (LLVM 22.1.8, 256 bits)/0] wgpu_gpu::oom::query_set_oom_test
