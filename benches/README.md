@@ -72,6 +72,32 @@ perf record <path_to_exe> --bench "filter"
 
 ## Benchmarks
 
+#### `Texture Initialization`
+
+Measures repeated binding of initialized texture views, including views covering only part of a
+texture, attachment textures, and groups mixing attachment and non-attachment textures. Two warm-up
+submissions precede timing. Encoding and queue submission are measured separately, excluding GPU
+waits. An unsubmitted-work case measures repeated recording without initializing the textures, and
+a creation case measures the cost of creating bind groups for existing texture views. Groups without
+textures provide a control for the cost of checking an empty texture initialization list.
+Each encoding iteration binds 1,000 groups ten times, for 10,000 dispatches, keeping the number of
+live texture subresources bounded. The creation case creates 1,000 groups per iteration.
+Binding entries, descriptors, and space for the resulting groups are allocated before creation
+timing; destruction and GPU waits are excluded.
+Two shared-resource cases cycle the groups over 16 texture pairs: attachment textures with
+identical views, and mixed attachment/non-attachment pairs with overlapping two-mip views.
+
+#### `Texture Init Render`
+
+Measures attachment writes followed by sampling in ten render passes, with 1,000 bind groups per
+pass sharing 16 texture pairs. The cases cover shared attachments, overlapping two-mip views of
+mixed attachment/uploaded textures, and a discard between sampling passes. A control uses empty
+bind groups and a solid-color shader; it still has the render output attachment.
+Each case is a separate benchmark so it can run in its own process. Eight submissions warm up the
+workload, then a pixel readback checks the rendered result before timing. Encoding and submission
+are timed separately; GPU waits and readback are excluded. Bind-group creation is measured
+separately with descriptors and destination capacity prepared in advance.
+
 #### `Renderpass Encoding`
 
 This benchmark measures the performance of recording and submitting a render pass with a large

@@ -1,12 +1,15 @@
 use alloc::{
+    boxed::Box,
     sync::Arc,
     vec::{Drain, Vec},
 };
 use core::ops::Range;
 
+use bit_vec::BitVec;
 use hashbrown::hash_map::Entry;
 
 use crate::{
+    binding_model::BindGroup,
     device::{Device, DeviceError},
     init_tracker::*,
     resource::{ParentDevice, RawResourceAccess, Texture, Trackable},
@@ -32,11 +35,87 @@ pub(crate) struct TextureSurfaceDiscard {
 
 pub(crate) type SurfacesInDiscardState = Vec<TextureSurfaceDiscard>;
 
+// Keep one rectangle inline; allocate a range tracker for more complex coverage.
+#[derive(Default)]
+enum TextureFirstUse {
+    #[default]
+    Unused,
+    Range(TextureInitRange),
+    Complex(Box<TextureInitTracker>),
+}
+
+impl TextureFirstUse {
+    fn record(
+        &mut self,
+        range: &TextureInitRange,
+        mip_count: u32,
+        layer_count: u32,
+    ) -> Option<TextureInitRange> {
+        let contains = |outer: &TextureInitRange, inner: &TextureInitRange| {
+            outer.mip_range.start <= inner.mip_range.start
+                && outer.mip_range.end >= inner.mip_range.end
+                && outer.layer_range.start <= inner.layer_range.start
+                && outer.layer_range.end >= inner.layer_range.end
+        };
+        let drain = |tracker: &mut TextureInitTracker, range: &TextureInitRange| {
+            for mip in
+                &mut tracker.mips[range.mip_range.start as usize..range.mip_range.end as usize]
+            {
+                mip.drain(range.layer_range.clone());
+            }
+        };
+        match self {
+            Self::Unused => {
+                *self = Self::Range(range.clone());
+                return Some(range.clone());
+            }
+            Self::Range(previous) if contains(previous, range) => return None,
+            Self::Range(previous) if contains(range, previous) => {
+                *previous = range.clone();
+                return Some(range.clone());
+            }
+            Self::Range(previous) => {
+                // Keep a rectangular union inline, including adjacent mip or layer ranges.
+                let touching =
+                    |a: &Range<u32>, b: &Range<u32>| a.start <= b.end && b.start <= a.end;
+                let merge = |a: &mut Range<u32>, b: &Range<u32>| {
+                    *a = a.start.min(b.start)..a.end.max(b.end);
+                };
+                if previous.layer_range == range.layer_range
+                    && touching(&previous.mip_range, &range.mip_range)
+                {
+                    merge(&mut previous.mip_range, &range.mip_range);
+                    return Some(range.clone());
+                }
+                if previous.mip_range == range.mip_range
+                    && touching(&previous.layer_range, &range.layer_range)
+                {
+                    merge(&mut previous.layer_range, &range.layer_range);
+                    return Some(range.clone());
+                }
+                let mut tracker = Box::new(TextureInitTracker::new(mip_count, layer_count));
+                drain(&mut tracker, previous);
+                *self = Self::Complex(tracker);
+            }
+            Self::Complex(_) => {}
+        }
+        let Self::Complex(tracker) = self else {
+            unreachable!()
+        };
+        let pending = tracker.check(range);
+        drain(tracker, range);
+        pending
+    }
+}
+
 #[derive(Default)]
 pub(crate) struct CommandBufferTextureMemoryActions {
     /// The tracker actions that we need to be executed before the command
     /// buffer is executed.
     init_actions: Vec<TextureInitTrackerAction>,
+    // First-use requirements, not current contents: discards still require inline repair.
+    first_uses: Vec<TextureFirstUse>,
+    bind_groups: BitVec<usize>,
     /// Tracks surfaces that were previously discarded within this command buffer.
     ///
     /// If a later pass reads from one of these surfaces, we must insert an immediate
@@ -54,6 +133,28 @@ pub(crate) struct CommandBufferTextureMemoryActions {
 }
 
 impl CommandBufferTextureMemoryActions {
+    pub(crate) fn register_bind_group(
+        &mut self,
+        bind_group: &BindGroup,
+        pending_discard_init_fixups: &mut SurfacesInDiscardState,
+    ) {
+        if bind_group.texture_init_actions.is_empty() {
+            return;
+        }
+        let index = bind_group.tracker_index().as_usize();
+        if self.discards.is_empty() && self.bind_groups.get(index).unwrap_or(false) {
+            return;
+        }
+        for action in &bind_group.texture_init_actions {
+            pending_discard_init_fixups.extend(self.register_init_action(action, None));
+        }
+        if index >= self.bind_groups.len() {
+            self.bind_groups
+                .grow(index + 1 - self.bind_groups.len(), false);
+        }
+        self.bind_groups.set(index, true);
+    }
+
     pub(crate) fn drain_init_actions(&mut self) -> Drain<'_, TextureInitTrackerAction> {
         self.init_actions.drain(..)
     }
@@ -90,20 +191,22 @@ impl CommandBufferTextureMemoryActions {
         // require inline initialization, which will be done by `fixup_discarded_surfaces`.
         let mut immediately_necessary_clears = SurfacesInDiscardState::new();
 
-        // Note that within a command buffer we may stack arbitrary memory init
-        // actions on the same texture Since we react to them in sequence, they
-        // are going to be dropped again at queue submit
-        //
-        // We don't need to add MemoryInitKind::NeedsInitializedMemory to
-        // init_actions if a surface is part of the discard list. But that would
-        // mean splitting up the action which is more than we'd win here.
-        self.init_actions.extend(
-            action
-                .texture
-                .initialization_status
-                .read()
-                .check_action(action),
-        );
+        let index = action.texture.tracker_index().as_usize();
+        if index >= self.first_uses.len() {
+            self.first_uses
+                .resize_with(index + 1, TextureFirstUse::default);
+        }
+        if let Some(range) = self.first_uses[index].record(
+            &action.range,
+            action.texture.desc.mip_level_count,
+            action.texture.full_range.layers.end,
+        ) {
+            self.init_actions.push(TextureInitTrackerAction {
+                texture: action.texture.clone(),
+                range,
+                kind: action.kind,
+            });
+        }
 
         // We expect very few discarded surfaces at any point in time which is
         // why a simple linear search is likely best. (i.e. most of the time
@@ -561,5 +664,63 @@ impl BakedCommands {
         }
 
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use alloc::vec::Vec;
+
+    use super::{TextureFirstUse, TextureInitRange};
+
+    #[test]
+    fn first_uses_preserve_order_and_gaps() {
+        let mut ranges = Vec::new();
+        for mip_start in 0..3 {
+            for mip_end in mip_start + 1..=3 {
+                for layer_start in 0..3 {
+                    for layer_end in layer_start + 1..=3 {
+                        ranges.push(TextureInitRange {
+                            mip_range: mip_start..mip_end,
+                            layer_range: layer_start..layer_end,
+                        });
+                    }
+                }
+            }
+        }
+        let full = TextureInitRange {
+            mip_range: 0..3,
+            layer_range: 0..3,
+        };
+        for first in &ranges {
+            for second in &ranges {
+                for kinds in [[false, false], [false, true], [true, false], [true, true]] {
+                    let mut tracker = TextureFirstUse::default();
+                    let mut original = [[None; 3]; 3];
+                    let mut folded = [[None; 3]; 3];
+                    // The first access decides whether a subresource needs a prefix clear.
+                    for (range, needs_clear) in
+                        [(first, kinds[0]), (second, kinds[1]), (&full, true)]
+                    {
+                        let pending = tracker.record(range, 3, 3);
+                        for (states, range) in [
+                            (&mut original, Some(range)),
+                            (&mut folded, pending.as_ref()),
+                        ] {
+                            if let Some(range) = range {
+                                for mip in range.mip_range.clone() {
+                                    for layer in range.layer_range.clone() {
+                                        states[mip as usize][layer as usize]
+                                            .get_or_insert(needs_clear);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    assert_eq!(original, folded, "{first:?}, {second:?}, {kinds:?}");
+                    assert!(tracker.record(&full, 3, 3).is_none());
+                }
+            }
+        }
     }
 }

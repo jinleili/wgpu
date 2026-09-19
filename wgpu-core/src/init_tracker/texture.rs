@@ -67,10 +67,7 @@ impl TextureInitTracker {
         }
     }
 
-    pub(crate) fn check_action(
-        &self,
-        action: &TextureInitTrackerAction,
-    ) -> Option<TextureInitTrackerAction> {
+    pub(crate) fn check(&self, range: &TextureInitRange) -> Option<TextureInitRange> {
         let mut mip_range_start = usize::MAX;
         let mut mip_range_end = usize::MIN;
         let mut layer_range_start = u32::MAX;
@@ -80,12 +77,10 @@ impl TextureInitTracker {
             .mips
             .iter()
             .enumerate()
-            .take(action.range.mip_range.end as usize)
-            .skip(action.range.mip_range.start as usize)
+            .take(range.mip_range.end as usize)
+            .skip(range.mip_range.start as usize)
         {
-            if let Some(uninitialized_layer_range) =
-                mip_tracker.check(action.range.layer_range.clone())
-            {
+            if let Some(uninitialized_layer_range) = mip_tracker.check(range.layer_range.clone()) {
                 mip_range_start = mip_range_start.min(i);
                 mip_range_end = i + 1;
                 layer_range_start = layer_range_start.min(uninitialized_layer_range.start);
@@ -94,13 +89,9 @@ impl TextureInitTracker {
         }
 
         if mip_range_start < mip_range_end && layer_range_start < layer_range_end {
-            Some(TextureInitTrackerAction {
-                texture: action.texture.clone(),
-                range: TextureInitRange {
-                    mip_range: mip_range_start as u32..mip_range_end as u32,
-                    layer_range: layer_range_start..layer_range_end,
-                },
-                kind: action.kind,
+            Some(TextureInitRange {
+                mip_range: mip_range_start as u32..mip_range_end as u32,
+                layer_range: layer_range_start..layer_range_end,
             })
         } else {
             None

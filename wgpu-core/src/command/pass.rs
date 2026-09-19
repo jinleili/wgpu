@@ -223,14 +223,10 @@ pub(super) fn flush_bindings_helper(
                     .check_action(action)
             }),
         );
-        for action in bind_group.texture_init_actions.iter() {
-            state.pending_discard_init_fixups.extend(
-                state
-                    .base
-                    .texture_memory_actions
-                    .register_init_action(action, None),
-            );
-        }
+        state
+            .base
+            .texture_memory_actions
+            .register_bind_group(bind_group, &mut state.pending_discard_init_fixups);
 
         let used_resource = bind_group
             .used

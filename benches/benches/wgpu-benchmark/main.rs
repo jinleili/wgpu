@@ -8,6 +8,8 @@ mod computepass;
 mod renderpass;
 mod resource_creation;
 mod shader;
+mod texture_init;
+mod texture_init_render;
 
 struct DeviceState {
     adapter_info: wgpu::AdapterInfo,
@@ -65,6 +67,26 @@ impl DeviceState {
 
 fn main() {
     let benchmarks = vec![
+        Benchmark {
+            name: "Texture Initialization",
+            func: texture_init::run_bench,
+        },
+        Benchmark {
+            name: "Texture Init Render: shared attachments",
+            func: texture_init_render::shared,
+        },
+        Benchmark {
+            name: "Texture Init Render: overlapping mixed views",
+            func: texture_init_render::overlapping,
+        },
+        Benchmark {
+            name: "Texture Init Render: discard then sample",
+            func: texture_init_render::discard,
+        },
+        Benchmark {
+            name: "Texture Init Render: no sampled textures",
+            func: texture_init_render::control,
+        },
         Benchmark {
             name: "Device::create_bind_group",
             func: bind_groups::run_bench,

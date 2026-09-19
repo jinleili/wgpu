@@ -452,6 +452,18 @@ pub fn run_bench(mut ctx: BenchmarkContext) -> anyhow::Result<Vec<wgpu_benchmark
 
     let mut results = Vec::new();
 
+    // Initialize resources and warm repeated binding before timing steady-state encoding.
+    for _ in 0..2 {
+        state
+            .device_state
+            .queue
+            .submit([state.run_subpass(&ctx, 0, 1)]);
+        state
+            .device_state
+            .device
+            .poll(wgpu::PollType::wait_indefinitely())?;
+    }
+
     // Test 10k dispatch calls split up into 1, 2, 4, and 8 computepasses
     for &cpasses in thread_count_list(&ctx) {
         let labels = vec![

@@ -4,6 +4,8 @@
 //! these tests to produce false negatives. One way to make them more reliable is to run
 //! them on llvmpipe with `LVP_POISON_MEMORY=true` in the environment.
 
+mod texture_binding;
+
 use core::num::NonZeroU64;
 
 use wgpu::util::DeviceExt as _;
@@ -50,6 +52,7 @@ impl ReadMethod {
 }
 
 pub fn all_tests(vec: &mut Vec<GpuTestInitializer>) {
+    texture_binding::all_tests(vec);
     vec.extend([
         COPY_BUFFER_TO_TEXTURE_PLANE0_LEAVES_PLANE1_UNINIT_NV12,
         COPY_BUFFER_TO_TEXTURE_STENCIL_LEAVES_DEPTH_UNINIT_DEPTH32FLOAT_STENCIL8,
