@@ -19,6 +19,16 @@ impl<T: raw_window_handle::HasDisplayHandle + core::fmt::Debug + Send + Sync + '
 {
 }
 
+/// Schedules native pipeline compilation on an application-owned executor.
+///
+/// Return promptly after queuing the task. It may run on any worker and must
+/// be invoked once to complete the request. Dropping a queued task reports an
+/// internal error to the caller.
+pub trait PipelineExecutor: core::fmt::Debug + Send + Sync {
+    /// Submit one independent compilation job.
+    fn execute(&self, task: alloc::boxed::Box<dyn FnOnce() + Send>);
+}
+
 /// Options for creating an instance.
 ///
 /// If you want to allow control of instance settings via environment variables, call any of the
@@ -49,6 +59,10 @@ pub struct InstanceDescriptor {
     pub memory_budget_thresholds: MemoryBudgetThresholds,
     /// Options for configuring the behavior of specific backends.
     pub backend_options: crate::BackendOptions,
+    /// Executor used by native asynchronous render and compute pipeline creation.
+    /// Without one, native compilation runs on the calling thread. Browser WebGPU
+    /// uses its own scheduler. Synchronous pipeline creation ignores this field.
+    pub pipeline_executor: Option<alloc::boxed::Box<dyn PipelineExecutor>>,
     /// System platform or compositor connection to connect this `Instance` to.
     ///
     /// If not [`None`], it is invalid to pass a different [`raw_window_handle::HasDisplayHandle`] to `create_surface()`.
@@ -72,6 +86,7 @@ impl InstanceDescriptor {
             flags: Default::default(),
             memory_budget_thresholds: Default::default(),
             backend_options: Default::default(),
+            pipeline_executor: None,
             display: None,
         }
     }
@@ -114,6 +129,7 @@ impl InstanceDescriptor {
             flags,
             memory_budget_thresholds: MemoryBudgetThresholds::default(),
             backend_options,
+            pipeline_executor: self.pipeline_executor,
             display: self.display,
         }
     }

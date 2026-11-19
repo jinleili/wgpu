@@ -27,6 +27,17 @@ pub fn init_logger() {
     let _ = console_log::init_with_level(log::Level::Info);
 }
 
+#[cfg(not(target_family = "wasm"))]
+#[derive(Debug)]
+struct TestPipelineExecutor;
+
+#[cfg(not(target_family = "wasm"))]
+impl wgpu::PipelineExecutor for TestPipelineExecutor {
+    fn execute(&self, task: Box<dyn FnOnce() + Send>) {
+        std::thread::spawn(task);
+    }
+}
+
 /// Initialize a wgpu instance with the options from the environment.
 pub fn initialize_instance(backends: wgpu::Backends, params: &TestParameters) -> Instance {
     // We ignore `WGPU_BACKEND` for now, merely using test filtering to only run a single backend's tests.
@@ -67,6 +78,12 @@ pub fn initialize_instance(backends: wgpu::Backends, params: &TestParameters) ->
     Instance::new(wgpu::InstanceDescriptor {
         backends,
         flags,
+        #[cfg(not(target_family = "wasm"))]
+        pipeline_executor: params
+            .use_pipeline_executor
+            .then(|| Box::new(TestPipelineExecutor) as _),
+        #[cfg(target_family = "wasm")]
+        pipeline_executor: None,
         memory_budget_thresholds: wgpu::MemoryBudgetThresholds {
             for_resource_creation: Some(99),
             for_device_loss: None,

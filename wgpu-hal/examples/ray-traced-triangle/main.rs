@@ -407,6 +407,7 @@ impl<A: hal::Api> Example<A> {
 
         let pipeline = unsafe {
             device.create_compute_pipeline(&hal::ComputePipelineDescriptor {
+                allow_compilation_concurrency: false,
                 label: Some("pipeline"),
                 layout: &pipeline_layout,
                 stage: hal::ProgrammableStage {

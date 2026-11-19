@@ -1,5 +1,7 @@
 use alloc::{borrow::ToOwned as _, sync::Arc, vec::Vec};
+use alloc::{boxed::Box, string::String};
 use core::{mem::align_of, ptr::NonNull, sync::atomic};
+use std::sync::mpsc;
 
 use bytemuck::TransparentWrapper;
 use objc2::{
@@ -159,6 +161,49 @@ const fn convert_vertex_format_to_naga(format: wgt::VertexFormat) -> nt::VertexF
     }
 }
 
+// Metal owns the callback after submission. Retain its result before the callback's
+// autorelease pool drains; each request has exactly one producer and consumer.
+type MetalResult<T> = Result<Retained<T>, String>;
+struct MetalRequest<T: objc2::Message>(mpsc::Receiver<MetalResult<T>>);
+
+impl<T: objc2::Message + Send + Sync + 'static> MetalRequest<T> {
+    fn new() -> (Self, mpsc::Sender<MetalResult<T>>) {
+        let (tx, rx) = mpsc::channel();
+        (Self(rx), tx)
+    }
+
+    /// Both pointers must be null or live for the duration of the Metal callback.
+    unsafe fn complete(sender: &mpsc::Sender<MetalResult<T>>, object: *mut T, error: *mut NSError) {
+        let result = unsafe { Retained::retain(object) }.ok_or_else(|| {
+            unsafe { error.as_ref() }.map_or_else(
+                || String::from("Metal returned neither a result nor an error"),
+                |error| format!("{error}"),
+            )
+        });
+        let _ = sender.send(result);
+    }
+
+    fn wait(self) -> MetalResult<T> {
+        self.0
+            .recv()
+            .map_err(|_| String::from("Metal dropped the compilation callback"))?
+    }
+}
+
+enum PreparedShader {
+    Ready(CompiledShader),
+    Compiling(Box<dyn FnOnce() -> Result<CompiledShader, crate::PipelineError>>),
+}
+
+impl PreparedShader {
+    fn finish(self) -> Result<CompiledShader, crate::PipelineError> {
+        match self {
+            Self::Ready(shader) => Ok(shader),
+            Self::Compiling(finish) => finish(),
+        }
+    }
+}
+
 /// Compile MSL source with the options this backend uses for every library
 /// it builds itself, whether naga-generated or hand-written.
 pub(super) fn compile_msl_library(
@@ -167,6 +212,14 @@ pub(super) fn compile_msl_library(
     enable_logging: bool,
     source: &str,
 ) -> Result<Retained<ProtocolObject<dyn MTLLibrary>>, Retained<NSError>> {
+    let options = msl_compile_options(msl_version, enable_logging);
+    device.newLibraryWithSource_options_error(&NSString::from_str(source), Some(&options))
+}
+
+fn msl_compile_options(
+    msl_version: MTLLanguageVersion,
+    enable_logging: bool,
+) -> Retained<MTLCompileOptions> {
     let options = MTLCompileOptions::new();
     options.setLanguageVersion(msl_version);
 
@@ -180,18 +233,19 @@ pub(super) fn compile_msl_library(
         options.setEnableLogging(true);
     }
 
-    device.newLibraryWithSource_options_error(&NSString::from_str(source), Some(&options))
+    options
 }
 
 impl super::Device {
-    fn load_shader(
+    fn prepare_shader(
         &self,
         stage: &crate::ProgrammableStage<super::ShaderModule>,
         vertex_buffer_mappings: &[naga::back::msl::VertexBufferMapping],
         layout: &super::PipelineLayout,
         primitive_class: MTLPrimitiveTopologyClass,
         naga_stage: naga::ShaderStage,
-    ) -> Result<CompiledShader, crate::PipelineError> {
+        concurrent: bool,
+    ) -> Result<PreparedShader, crate::PipelineError> {
         match stage.module.source {
             ShaderModuleSource::Naga(ref naga_shader) => {
                 let stage_bit = map_naga_stage(naga_stage);
@@ -292,16 +346,27 @@ impl super::Device {
                     ep = stage.entry_point,
                 );
 
-                let library = compile_msl_library(
-                    &self.shared.device,
-                    self.shared.private_caps.msl_version,
-                    self.shared.use_debug_printf.load(atomic::Ordering::Relaxed),
-                    &source,
-                )
-                .map_err(|err| {
-                    log::debug!("Naga generated shader:\n{source}");
-                    crate::PipelineError::Linkage(stage_bit, format!("Metal: {err}"))
-                })?;
+                let version = self.shared.private_caps.msl_version;
+                let logging = self.shared.use_debug_printf.load(atomic::Ordering::Relaxed);
+                let request = concurrent.then(|| {
+                    let (request, sender) = MetalRequest::new();
+                    // SAFETY: Metal supplies live callback arguments.
+                    let block = block2::RcBlock::new(move |object, error| unsafe {
+                        MetalRequest::complete(&sender, object, error)
+                    });
+                    let options = msl_compile_options(version, logging);
+                    // SAFETY: The submitted block owns its sender and Metal copies the block.
+                    unsafe {
+                        self.shared
+                            .device
+                            .newLibraryWithSource_options_completionHandler(
+                                &NSString::from_str(&source),
+                                Some(&options),
+                                block2::RcBlock::as_ptr(&block),
+                            );
+                    }
+                    request
+                });
 
                 let ep_index = module
                     .entry_points
@@ -309,8 +374,11 @@ impl super::Device {
                     .position(|ep| ep.stage == naga_stage && ep.name == stage.entry_point)
                     .ok_or(crate::PipelineError::EntryPoint(naga_stage))?;
                 let ep = &module.entry_points[ep_index];
-                let translated_ep_name = info.entry_point_names[0]
-                    .as_ref()
+                let translated_ep_name = info
+                    .entry_point_names
+                    .into_iter()
+                    .next()
+                    .expect("selected entry point")
                     .map_err(|e| crate::PipelineError::Linkage(stage_bit, format!("{e}")))?;
 
                 let wg_size = MTLSize {
@@ -318,13 +386,6 @@ impl super::Device {
                     height: ep.workgroup_size[1] as _,
                     depth: ep.workgroup_size[2] as _,
                 };
-
-                let function = library
-                    .newFunctionWithName(&NSString::from_str(translated_ep_name))
-                    .ok_or_else(|| {
-                        log::error!("Function '{translated_ep_name}' does not exist");
-                        crate::PipelineError::EntryPoint(naga_stage)
-                    })?;
 
                 // collect sizes indices, immutable buffers, and work group memory sizes
                 let ep_info = &module_info.get_entry_point(ep_index);
@@ -382,18 +443,46 @@ impl super::Device {
                     }
                 }
 
-                Ok(CompiledShader {
-                    library,
-                    function,
-                    wg_size,
-                    wg_memory_sizes,
-                    sized_bindings,
-                    immutable_buffer_mask,
-                })
+                let finish = move |library: Retained<ProtocolObject<dyn MTLLibrary>>| {
+                    let function = library
+                        .newFunctionWithName(&NSString::from_str(&translated_ep_name))
+                        .ok_or_else(|| {
+                            log::error!("Function '{translated_ep_name}' does not exist");
+                            crate::PipelineError::EntryPoint(naga_stage)
+                        })?;
+
+                    Ok(CompiledShader {
+                        library,
+                        function,
+                        wg_size,
+                        wg_memory_sizes,
+                        sized_bindings,
+                        immutable_buffer_mask,
+                    })
+                };
+                let compilation_error = move |source: &str, error: String| {
+                    log::debug!("Naga generated shader:\n{source}");
+                    crate::PipelineError::Linkage(stage_bit, format!("Metal: {error}"))
+                };
+                match request {
+                    Some(request) => Ok(PreparedShader::Compiling(Box::new(move || {
+                        finish(
+                            request
+                                .wait()
+                                .map_err(|error| compilation_error(&source, error))?,
+                        )
+                    }))),
+                    None => {
+                        let library =
+                            compile_msl_library(&self.shared.device, version, logging, &source)
+                                .map_err(|error| compilation_error(&source, format!("{error}")))?;
+                        Ok(PreparedShader::Ready(finish(library)?))
+                    }
+                }
             }
             ShaderModuleSource::Passthrough(ref shader) => {
                 let size = shader.num_workgroups[stage.entry_point];
-                Ok(CompiledShader {
+                Ok(PreparedShader::Ready(CompiledShader {
                     library: shader.library.clone(),
                     function: shader
                         .library
@@ -407,7 +496,7 @@ impl super::Device {
                     wg_memory_sizes: vec![],
                     sized_bindings: vec![],
                     immutable_buffer_mask: 0,
-                })
+                }))
             }
         }
     }
@@ -1581,6 +1670,26 @@ impl crate::Device for super::Device {
             let (primitive_class, raw_primitive_type) =
                 conv::map_primitive_topology(desc.primitive.topology);
 
+            let prepare_fragment = |stage| {
+                self.prepare_shader(
+                    stage,
+                    &[],
+                    desc.layout,
+                    primitive_class,
+                    naga::ShaderStage::Fragment,
+                    desc.allow_compilation_concurrency,
+                )
+            };
+            // Submit the fragment library before preparing the independent vertex stages.
+            let pending_fragment = if desc.allow_compilation_concurrency {
+                desc.fragment_stage
+                    .as_ref()
+                    .map(prepare_fragment)
+                    .transpose()?
+            } else {
+                None
+            };
+
             let vs_info;
             let ts_info;
             let ms_info;
@@ -1642,13 +1751,16 @@ impl crate::Device for super::Device {
 
                     // Setup vertex shader
                     {
-                        let vs = self.load_shader(
-                            vertex_stage,
-                            &vertex_buffer_mappings,
-                            desc.layout,
-                            primitive_class,
-                            naga::ShaderStage::Vertex,
-                        )?;
+                        let vs = self
+                            .prepare_shader(
+                                vertex_stage,
+                                &vertex_buffer_mappings,
+                                desc.layout,
+                                primitive_class,
+                                naga::ShaderStage::Vertex,
+                                desc.allow_compilation_concurrency,
+                            )?
+                            .finish()?;
 
                         descriptor.setVertexFunction(Some(&vs.function));
 
@@ -1739,13 +1851,16 @@ impl crate::Device for super::Device {
 
                     // Setup task stage
                     if let Some(ref task_stage) = task_stage {
-                        let ts = self.load_shader(
-                            task_stage,
-                            &[],
-                            desc.layout,
-                            primitive_class,
-                            naga::ShaderStage::Task,
-                        )?;
+                        let ts = self
+                            .prepare_shader(
+                                task_stage,
+                                &[],
+                                desc.layout,
+                                primitive_class,
+                                naga::ShaderStage::Task,
+                                desc.allow_compilation_concurrency,
+                            )?
+                            .finish()?;
                         unsafe { descriptor.setObjectFunction(Some(&ts.function)) };
                         if supports_mutability {
                             Self::set_buffers_mutability(
@@ -1768,13 +1883,16 @@ impl crate::Device for super::Device {
 
                     // Setup mesh stage
                     {
-                        let ms = self.load_shader(
-                            mesh_stage,
-                            &[],
-                            desc.layout,
-                            primitive_class,
-                            naga::ShaderStage::Mesh,
-                        )?;
+                        let ms = self
+                            .prepare_shader(
+                                mesh_stage,
+                                &[],
+                                desc.layout,
+                                primitive_class,
+                                naga::ShaderStage::Mesh,
+                                desc.allow_compilation_concurrency,
+                            )?
+                            .finish()?;
                         unsafe { descriptor.setMeshFunction(Some(&ms.function)) };
                         if supports_mutability {
                             Self::set_buffers_mutability(
@@ -1809,13 +1927,11 @@ impl crate::Device for super::Device {
             // Fragment shader
             let fs_info = match desc.fragment_stage {
                 Some(ref stage) => {
-                    let fs = self.load_shader(
-                        stage,
-                        &[],
-                        desc.layout,
-                        primitive_class,
-                        naga::ShaderStage::Fragment,
-                    )?;
+                    let fs = match pending_fragment {
+                        Some(shader) => shader,
+                        None => prepare_fragment(stage)?,
+                    }
+                    .finish()?;
 
                     unsafe { descriptor.setFragmentFunction(Some(&fs.function)) };
                     if supports_mutability {
@@ -1950,19 +2066,52 @@ impl crate::Device for super::Device {
                     MetalGenericRenderPipelineDescriptor::Mesh(_) => icb.lowers_mesh_draws(),
                 });
             // Create the pipeline from descriptor
-            let create = |descriptor: &MetalGenericRenderPipelineDescriptor| match descriptor {
-                MetalGenericRenderPipelineDescriptor::Standard(d) => self
-                    .shared
-                    .device
-                    .newRenderPipelineStateWithDescriptor_error(d),
-                MetalGenericRenderPipelineDescriptor::Mesh(d) => self
-                    .shared
-                    .device
-                    .newRenderPipelineStateWithMeshDescriptor_options_reflection_error(
-                        d,
-                        MTLPipelineOption::empty(),
-                        None,
-                    ),
+            let create = |descriptor: &MetalGenericRenderPipelineDescriptor| {
+                if desc.allow_compilation_concurrency {
+                    let (request, sender) = MetalRequest::new();
+                    // SAFETY: Each Metal call copies a block owning the completion sender.
+                    unsafe {
+                        match descriptor {
+                            MetalGenericRenderPipelineDescriptor::Standard(d) => {
+                                let block = block2::RcBlock::new(move |state, error| {
+                                    MetalRequest::complete(&sender, state, error)
+                                });
+                                self.shared
+                                    .device
+                                    .newRenderPipelineStateWithDescriptor_completionHandler(
+                                        d,
+                                        block2::RcBlock::as_ptr(&block),
+                                    );
+                            }
+                            MetalGenericRenderPipelineDescriptor::Mesh(d) => {
+                                let block = block2::RcBlock::new(move |state, _, error| {
+                                    MetalRequest::complete(&sender, state, error)
+                                });
+                                self.shared.device.newRenderPipelineStateWithMeshDescriptor_options_completionHandler(
+                                    d,
+                                    MTLPipelineOption::empty(),
+                                    block2::RcBlock::as_ptr(&block),
+                                );
+                            }
+                        }
+                    }
+                    return request.wait();
+                }
+                match descriptor {
+                    MetalGenericRenderPipelineDescriptor::Standard(d) => self
+                        .shared
+                        .device
+                        .newRenderPipelineStateWithDescriptor_error(d),
+                    MetalGenericRenderPipelineDescriptor::Mesh(d) => self
+                        .shared
+                        .device
+                        .newRenderPipelineStateWithMeshDescriptor_options_reflection_error(
+                            d,
+                            MTLPipelineOption::empty(),
+                            None,
+                        ),
+                }
+                .map_err(|error| format!("{error}"))
             };
             let raw = create(&descriptor).map_err(|e| {
                 crate::PipelineError::Linkage(
@@ -2047,13 +2196,15 @@ impl crate::Device for super::Device {
                     immutable_buffer_mask: 0,
                 }
             } else {
-                self.load_shader(
+                self.prepare_shader(
                     &desc.stage,
                     &[],
                     desc.layout,
                     MTLPrimitiveTopologyClass::Unspecified,
                     naga::ShaderStage::Compute,
+                    desc.allow_compilation_concurrency,
                 )?
+                .finish()?
             };
 
             descriptor.setComputeFunction(Some(&cs.function));
@@ -2077,22 +2228,40 @@ impl crate::Device for super::Device {
                 descriptor.setLabel(Some(&NSString::from_str(name)));
             }
 
-            let raw = self
-                .shared
-                .device
-                .newComputePipelineStateWithDescriptor_options_reflection_error(
-                    &descriptor,
-                    MTLPipelineOption::empty(),
-                    None,
-                );
-
-            let raw: Retained<ProtocolObject<dyn MTLComputePipelineState>> =
-                raw.map_err(|e: Retained<NSError>| {
-                    crate::PipelineError::Linkage(
-                        wgt::ShaderStages::COMPUTE,
-                        format!("new_compute_pipeline_state: {e:?}"),
+            let raw = if desc.allow_compilation_concurrency {
+                let (request, sender) = MetalRequest::new();
+                // SAFETY: Metal supplies live callback arguments.
+                let block = block2::RcBlock::new(move |state, _, error| unsafe {
+                    MetalRequest::complete(&sender, state, error)
+                });
+                // SAFETY: Metal copies the block and retains all inputs until completion.
+                unsafe {
+                    self.shared
+                        .device
+                        .newComputePipelineStateWithDescriptor_options_completionHandler(
+                            &descriptor,
+                            MTLPipelineOption::empty(),
+                            block2::RcBlock::as_ptr(&block),
+                        );
+                }
+                request.wait()
+            } else {
+                self.shared
+                    .device
+                    .newComputePipelineStateWithDescriptor_options_reflection_error(
+                        &descriptor,
+                        MTLPipelineOption::empty(),
+                        None,
                     )
-                })?;
+                    .map_err(|error| format!("{error}"))
+            };
+
+            let raw: Retained<ProtocolObject<dyn MTLComputePipelineState>> = raw.map_err(|e| {
+                crate::PipelineError::Linkage(
+                    wgt::ShaderStages::COMPUTE,
+                    format!("new_compute_pipeline_state: {e:?}"),
+                )
+            })?;
 
             self.counters.compute_pipelines.add(1);
 

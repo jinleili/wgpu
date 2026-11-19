@@ -400,6 +400,7 @@ impl<D: Device + DynResource> DynDevice for D {
         >,
     ) -> Result<Box<dyn DynRenderPipeline>, PipelineError> {
         let desc = RenderPipelineDescriptor {
+            allow_compilation_concurrency: desc.allow_compilation_concurrency,
             label: desc.label,
             layout: desc.layout.expect_downcast_ref(),
             vertex_processor: match &desc.vertex_processor {
@@ -444,6 +445,7 @@ impl<D: Device + DynResource> DynDevice for D {
         >,
     ) -> Result<Box<dyn DynComputePipeline>, PipelineError> {
         let desc = ComputePipelineDescriptor {
+            allow_compilation_concurrency: desc.allow_compilation_concurrency,
             label: desc.label,
             layout: desc.layout.expect_downcast_ref(),
             stage: desc.stage.clone().expect_downcast(),

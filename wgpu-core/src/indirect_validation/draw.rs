@@ -609,6 +609,7 @@ fn create_validation_pipeline(
     instance_flags: wgt::InstanceFlags,
 ) -> Result<Box<dyn hal::DynComputePipeline>, CreateIndirectValidationPipelineError> {
     let pipeline_desc = hal::ComputePipelineDescriptor {
+        allow_compilation_concurrency: false,
         label: hal_label(
             Some("(wgpu internal) Indirect draw validation pipeline"),
             instance_flags,

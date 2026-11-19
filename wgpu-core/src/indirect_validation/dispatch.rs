@@ -208,6 +208,7 @@ impl Dispatch {
         });
 
         let pipeline_desc = hal::ComputePipelineDescriptor {
+            allow_compilation_concurrency: false,
             label: hal_label(
                 Some("(wgpu internal) Indirect dispatch validation pipeline"),
                 instance_flags,

@@ -64,6 +64,7 @@ webgpu = [
     "naga?/wgsl-out",
     "dep:wasm-bindgen-futures",
     "web-sys/Document",
+    "web-sys/DomException",
     "web-sys/Event",
     "web-sys/MediaQueryList",
     "web-sys/Navigator",
@@ -223,6 +224,7 @@ static_assertions.workspace = true
 # Not Webassembly #
 ###################
 [target.'cfg(not(target_family = "wasm"))'.dependencies]
+futures-channel.workspace = true
 # Needed for only wgpu-core backend. Not optional as only wgpu-core backend exists on native platforms.
 wgpu-core = { workspace = true, default-features = true, features = [
     "renderdoc",

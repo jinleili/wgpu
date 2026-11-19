@@ -259,6 +259,7 @@ impl<A: hal::Api> Example<A> {
 
         let constants = naga::back::PipelineConstants::default();
         let pipeline_desc = hal::RenderPipelineDescriptor {
+            allow_compilation_concurrency: false,
             label: None,
             layout: &pipeline_layout,
             vertex_processor: hal::VertexProcessor::Standard {

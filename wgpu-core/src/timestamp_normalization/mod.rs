@@ -210,6 +210,7 @@ impl TimestampNormalizer {
             constants.insert(String::from("TIMESTAMP_PERIOD_SHIFT"), shift as f64);
 
             let pipeline_desc = hal::ComputePipelineDescriptor {
+                allow_compilation_concurrency: false,
                 label: hal_label(
                     Some("(wgpu internal) Timestamp normalizer pipeline"),
                     device.instance_flags,

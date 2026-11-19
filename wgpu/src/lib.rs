@@ -111,7 +111,7 @@ pub use wgt::{
     ImageSubresourceRange, IndexFormat, InstanceDescriptor, InstanceFlags, InternalCounters,
     Limits, LoadOpDontCare, MapMode, MemoryBudgetThresholds, MemoryHints, MipmapFilterMode,
     MultisampleState, NoopBackendOptions, Origin2d, Origin3d, PassthroughShaderEntryPoint,
-    PipelineStatisticsTypes, PollError, PollStatus, PolygonMode, PowerPreference,
+    PipelineExecutor, PipelineStatisticsTypes, PollError, PollStatus, PolygonMode, PowerPreference,
     PredefinedColorSpace, PresentMode, PresentationTimestamp, PrimitiveState, PrimitiveTopology,
     QueryType, Rect, RenderBundleDepthStencil, RequestAdapterError, SamplerBindingType,
     SamplerBorderColor, ShaderLocation, ShaderModel, ShaderRuntimeChecks, ShaderStages,

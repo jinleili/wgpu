@@ -56,3 +56,113 @@ fn device_and_buffers() {
     device.poll(wgpu::PollType::wait_indefinitely()).unwrap();
     assert!(done2.load(Relaxed));
 }
+
+#[cfg(not(target_family = "wasm"))]
+#[test]
+fn async_pipeline_executor_owns_inputs_and_completes_once() {
+    use futures_lite::future::poll_once;
+    use std::sync::mpsc;
+
+    #[derive(Debug)]
+    struct Queue(mpsc::Sender<Box<dyn FnOnce() + Send>>);
+    impl wgpu::PipelineExecutor for Queue {
+        fn execute(&self, task: Box<dyn FnOnce() + Send>) {
+            self.0.send(task).unwrap();
+        }
+    }
+
+    let (tx, jobs) = mpsc::channel();
+    let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
+        backends: wgpu::Backends::NOOP,
+        backend_options: wgpu::BackendOptions {
+            noop: wgpu::NoopBackendOptions::enabled(),
+            ..Default::default()
+        },
+        pipeline_executor: Some(Box::new(Queue(tx))),
+        ..wgpu::InstanceDescriptor::new_without_display_handle()
+    });
+    let adapter = pollster::block_on(instance.request_adapter(&Default::default())).unwrap();
+    let (device, _queue) = pollster::block_on(adapter.request_device(&Default::default())).unwrap();
+    let (render, compute, abandoned, rejected, lost) = {
+        let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
+            label: None,
+            source: wgpu::ShaderSource::Wgsl(
+                "@vertex fn vs(@location(0) p: vec4f) -> @builtin(position) vec4f { return p; }
+                 @fragment fn fs() -> @location(0) vec4f { return vec4f(1); }
+                 @compute @workgroup_size(1) fn cs() {}"
+                    .into(),
+            ),
+        });
+        let layout = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor::default());
+        let label = String::from("queued pipeline");
+        let entry = String::from("cs");
+        let compute = wgpu::ComputePipelineDescriptor {
+            label: Some(&label),
+            module: &module,
+            layout: Some(&layout),
+            entry_point: Some(&entry),
+            compilation_options: Default::default(),
+            cache: None,
+        };
+        let render = wgpu::RenderPipelineDescriptor {
+            label: Some(&label),
+            layout: Some(&layout),
+            vertex: wgpu::VertexState {
+                module: &module,
+                entry_point: Some("vs"),
+                compilation_options: Default::default(),
+                buffers: &[Some(wgpu::VertexBufferLayout {
+                    array_stride: 16,
+                    step_mode: wgpu::VertexStepMode::Vertex,
+                    attributes: &wgpu::vertex_attr_array![0 => Float32x4],
+                })],
+            },
+            primitive: Default::default(),
+            depth_stencil: None,
+            multisample: Default::default(),
+            fragment: Some(wgpu::FragmentState {
+                module: &module,
+                entry_point: Some("fs"),
+                compilation_options: Default::default(),
+                targets: &[Some(wgpu::TextureFormat::Rgba8Unorm.into())],
+            }),
+            multiview_mask: None,
+            cache: None,
+        };
+        let _ = device.create_compute_pipeline(&compute);
+        let _ = device.create_render_pipeline(&render);
+        assert!(matches!(jobs.try_recv(), Err(mpsc::TryRecvError::Empty)));
+        (
+            device.create_render_pipeline_async(&render),
+            device.create_compute_pipeline_async(&compute),
+            device.create_compute_pipeline_async(&compute),
+            device.create_compute_pipeline_async(&compute),
+            device.create_compute_pipeline_async(&wgpu::ComputePipelineDescriptor {
+                entry_point: Some("missing"),
+                ..compute
+            }),
+        )
+    };
+
+    let mut render = Box::pin(render);
+    let mut compute = Box::pin(compute);
+    assert!(pollster::block_on(poll_once(&mut render)).is_none());
+    assert!(pollster::block_on(poll_once(&mut compute)).is_none());
+    drop(abandoned);
+    for _ in 0..3 {
+        jobs.try_recv().unwrap()();
+    }
+    drop(jobs.try_recv().unwrap());
+    assert!(pollster::block_on(render).is_ok());
+    assert!(pollster::block_on(compute).is_ok());
+    assert!(matches!(
+        pollster::block_on(rejected),
+        Err(wgpu::Error::Internal { .. })
+    ));
+    device.poll(wgpu::PollType::wait_indefinitely()).unwrap();
+
+    // Device loss after enqueue takes precedence over validating the entry point.
+    device.destroy();
+    jobs.try_recv().unwrap()();
+    assert!(pollster::block_on(lost).is_ok());
+}

@@ -2765,6 +2765,8 @@ pub struct ComputePipelineDescriptor<
     M: DynShaderModule + ?Sized,
     Pc: DynPipelineCache + ?Sized,
 > {
+    /// Allows the backend to overlap compilation of independent stages on a worker.
+    pub allow_compilation_concurrency: bool,
     pub label: Label<'a>,
     /// The layout of bind groups for this pipeline.
     pub layout: &'a Pl,
@@ -2813,6 +2815,8 @@ pub struct RenderPipelineDescriptor<
     M: DynShaderModule + ?Sized,
     Pc: DynPipelineCache + ?Sized,
 > {
+    /// Allows the backend to overlap compilation of independent stages on a worker.
+    pub allow_compilation_concurrency: bool,
     pub label: Label<'a>,
     /// The layout of bind groups for this pipeline.
     pub layout: &'a Pl,

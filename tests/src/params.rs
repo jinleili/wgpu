@@ -30,6 +30,9 @@ pub struct TestParameters {
     /// For testing workarounds to Fxc bugs.
     pub force_fxc: bool,
 
+    /// Run native asynchronous pipeline creation on a worker.
+    pub use_pipeline_executor: bool,
+
     /// Conditions under which this test should be skipped.
     pub skips: Vec<FailureCase>,
 
@@ -50,6 +53,7 @@ impl Default for TestParameters {
             required_instance_flags: InstanceFlags::empty(),
             forbidden_instance_flags: InstanceFlags::empty(),
             force_fxc: false,
+            use_pipeline_executor: false,
             // By default we skip the noop backend, and enable it if the test
             // parameters ask us to remove it.
             skips: vec![FailureCase::backend(wgpu::Backends::NOOP)],

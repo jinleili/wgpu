@@ -83,6 +83,7 @@ impl InstanceDevices {
 #[derive(Default)]
 pub struct Instance {
     _name: String,
+    pub(crate) pipeline_executor: Option<Box<dyn wgt::PipelineExecutor>>,
 
     /// List of instances per `wgpu-hal` backend.
     ///
@@ -142,6 +143,7 @@ impl Instance {
     ) -> Arc<Self> {
         Arc::new(Self {
             _name: name,
+            pipeline_executor: None,
             instance_per_backend: vec![(A::VARIANT, Box::new(hal_instance))],
             requested_backends: A::VARIANT.into(),
             supported_backends: A::VARIANT.into(),
@@ -688,6 +690,7 @@ impl InstanceBuilder {
         Self {
             instance: Instance {
                 _name: name.to_owned(),
+                pipeline_executor: desc.pipeline_executor.take(),
                 instance_per_backend: Vec::new(),
                 requested_backends: desc.backends,
                 supported_backends: Backends::empty(),
